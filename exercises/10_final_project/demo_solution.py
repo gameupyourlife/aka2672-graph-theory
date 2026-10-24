@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.graph import Edge, Graph, Vertex
 from lib.utils import format_path, load_exercise, load_module_from_path
-from lib.visualization import print_graph
+from lib.visualization import can_draw, draw, print_graph
 
 PREVIOUS = "demo_solution"
 
@@ -252,6 +252,65 @@ def main() -> None:
     for (u, v), amount in flow.items():
         if amount > 0:
             print(f"  {u} -> {v}: {amount}")
+
+    if can_draw():
+        _draw_report(nangijala)
+
+
+def _draw_report(nangijala: Graph) -> None:
+    """Show the results of the modules on the map (needs matplotlib, does not block)."""
+    edges, total = winter_roads(nangijala)
+    draw(
+        nangijala,
+        title=f"Winterwege ({total} Minuten) und kritische Orte (rot umrandet)",
+        layout=data.POSITIONS,
+        highlight_edges=edges,
+        highlight_vertices=critical_places(nangijala),
+    )
+
+    route = fastest_route(nangijala, "Reiterhof", "Tengils Burg")
+    if route is not None:
+        path, minutes = route
+        draw(
+            nangijala,
+            title=f"Schnellster Weg Reiterhof -> Tengils Burg: {minutes} Minuten",
+            layout=data.POSITIONS,
+            highlight_edges=list(zip(path, path[1:])),
+            highlight_vertices=[path[0], path[-1]],
+        )
+
+    colors = lantern_colors(nangijala)
+    draw(
+        nangijala,
+        title=f"Laternenfarben: {coloring.number_of_colors(colors)} Farben",
+        layout=data.POSITIONS,
+        vertex_colors={place: f"Farbe {c}" for place, c in colors.items()},
+        show_weights=False,
+    )
+
+    people = list(data.QUALIFICATIONS)
+    qualified = Graph()
+    qualified.add_vertices(people)
+    for person, tasks in data.QUALIFICATIONS.items():
+        for task in tasks:
+            qualified.add_edge(person, task)
+    assignment = assign_tasks(data.QUALIFICATIONS)
+    draw(
+        qualified,
+        title=f"Aufgabenverteilung: {len(assignment)} von {len(people)} Personen",
+        left=people,
+        highlight_edges=list(assignment.items()),
+    )
+
+    value, flow = max_supply(data.SUPPLY_ROUTES, "Kirschtal", "Heckenrosental")
+    supply = Graph.from_edges(data.SUPPLY_ROUTES, directed=True)
+    draw(
+        supply,
+        title=f"Nachschub: maximal {value} Säcke pro Nacht (Fluss/Kapazität)",
+        layout=data.POSITIONS,
+        edge_labels={(u, v): f"{flow[(u, v)]}/{c}" for u, v, c in supply.edges()},
+        highlight_edges=[edge for edge, amount in flow.items() if amount > 0],
+    )
 
 
 if __name__ == "__main__":

@@ -22,8 +22,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
-from lib.generators import small_weighted_graph
+from lib.generators import random_connected_graph, small_weighted_graph
 from lib.graph import Edge, Graph, Vertex
+from lib.visualization import can_draw, draw, pause
 
 
 class UnionFind:
@@ -217,3 +218,33 @@ if __name__ == "__main__":
         f"With isolated Vimmerby: {len(forest)} edges, "
         f"{count_components(graph)} components (a spanning forest)"
     )
+
+    # Drawings (only if matplotlib is installed; the windows do not block).
+    if can_draw():
+        # Animation: Kruskal looks at the edges from light to heavy and keeps
+        # an edge exactly if it does not close a cycle.
+        lonneberga = small_weighted_graph()
+        drawing = draw(lonneberga, title="Kruskal on the Lönneberga graph")
+        components = UnionFind(lonneberga.vertices())
+        accepted: list[Edge] = []
+        for edge in sorted(lonneberga.edges(), key=lambda e: e.weight):
+            if components.union(edge.u, edge.v):
+                accepted.append(edge)
+                verdict = "accepted"
+            else:
+                verdict = "rejected (cycle)"
+            drawing.update(
+                title=f"Kruskal: {edge.u} - {edge.v} ({edge.weight}) {verdict}",
+                highlight_edges=accepted,
+            )
+            pause(0.8)
+        drawing.update(title=f"Minimum spanning tree, total weight {spanning_tree_weight(accepted)}")
+
+        # A bigger random example.
+        example = random_connected_graph(16, 12, seed=7, min_weight=1, max_weight=20)
+        tree = kruskal(example)
+        draw(
+            example,
+            title=f"Minimum spanning tree of a random graph (weight {spanning_tree_weight(tree)})",
+            highlight_edges=tree,
+        )

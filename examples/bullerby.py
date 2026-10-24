@@ -5,6 +5,7 @@ Shows how to
 * build a small undirected graph,
 * ask for vertices, edges, neighbours and degrees,
 * print the graph and export it as a Graphviz DOT file,
+* draw it in a window (if matplotlib is installed),
 * create standard graphs with ``lib.generators``.
 
 Run from the project root::
@@ -19,7 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # find ``lib``
 
 from lib import generators
 from lib.graph import Graph
-from lib.visualization import print_graph, to_dot
+from lib.visualization import can_draw, draw, print_graph, to_dot
 
 
 def build_bullerby() -> Graph:
@@ -69,6 +70,16 @@ def main() -> None:
     print("\n--- Graphviz DOT export ---")
     print(to_dot(bullerby, name="Bullerbü"))
     print("(Paste this into https://dreampuf.github.io/GraphvizOnline/ to see a drawing.)")
+
+    print("\n--- Drawing with matplotlib (optional) ---")
+    if can_draw():
+        # The windows do not block; they stay open until you close them.
+        draw(bullerby, title="Bullerbü", highlight_vertices=["Mittelhof"])
+        draw(visits, title="Who visits whom?")
+        draw(generators.petersen_graph(), title="Petersen graph", shells=[range(5), range(5, 10)])
+        print("Opened 3 windows.")
+    else:
+        print("Install matplotlib ('pip install matplotlib') to see drawings.")
 
 
 if __name__ == "__main__":

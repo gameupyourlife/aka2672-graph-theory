@@ -42,6 +42,34 @@ ROADS: list[tuple[str, str, int]] = [
     ("Tengils Burg", "Karmanjaka", 18),
 ]
 
+# Map coordinates (x = west -> east, y = south -> north) for drawings with
+# ``draw(graph, layout=POSITIONS)``. "Kirschtal" and "Heckenrosental" are the
+# two valleys as a whole, used by the supply routes below.
+POSITIONS: dict[str, tuple[float, float]] = {
+    "Sofias Hof": (0.0, 4.6),
+    "Goldener Hahn": (1.2, 6.0),
+    "Reiterhof": (1.6, 3.6),
+    "Mühle": (4.0, 6.0),
+    "Kirschtalbrücke": (3.6, 2.8),
+    "Westwald": (1.0, 1.2),
+    "Wolfsschlucht": (5.8, 4.2),
+    "Bärenpass": (5.4, 1.0),
+    "Adlerhorst": (7.6, 5.8),
+    "Waldsee": (8.0, 2.6),
+    "Karmafall": (10.0, 7.0),
+    "Katlas Höhle": (12.4, 8.0),
+    "Stadttor": (10.2, 2.6),
+    "Marktplatz": (12.0, 3.2),
+    "Mattiashof": (11.6, 4.8),
+    "Rebellenhöhle": (13.8, 5.6),
+    "Fischerhütte": (14.0, 2.4),
+    "Grenzwache": (9.6, -0.4),
+    "Tengils Burg": (12.0, -1.2),
+    "Karmanjaka": (14.4, -1.6),
+    "Kirschtal": (2.4, 3.4),
+    "Heckenrosental": (12.4, 2.6),
+}
+
 KIRSCHTAL = ["Reiterhof", "Goldener Hahn", "Sofias Hof", "Mühle", "Kirschtalbrücke", "Westwald"]
 HECKENROSENTAL = ["Stadttor", "Marktplatz", "Mattiashof", "Rebellenhöhle", "Fischerhütte"]
 

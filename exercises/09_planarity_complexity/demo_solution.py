@@ -90,6 +90,7 @@ from lib.generators import (
 )
 from lib.graph import Graph, Vertex
 from lib.utils import format_path, measure_time
+from lib.visualization import can_draw, draw
 
 # ----------------------------------------------------------------------
 # Part A: planarity
@@ -342,3 +343,19 @@ if __name__ == "__main__":
     width = max(len(problem) for problem in COMPLEXITY_CLASSES)
     for problem, label in COMPLEXITY_CLASSES.items():
         print(f"  {problem:<{width}}  {label}")
+
+    # Drawings (only if matplotlib is installed; the windows do not block).
+    if can_draw():
+        k33 = complete_bipartite_graph(3, 3)
+        for name, graph, options in [
+            ("K5", complete_graph(5), {}),
+            ("K3,3", k33, {"left": ["L0", "L1", "L2"]}),
+            ("Petersen graph", petersen_graph(), {"shells": [range(5), range(5, 10)]}),
+        ]:
+            n, m = graph.num_vertices(), graph.num_edges()
+            if is_certainly_nonplanar(graph):
+                bound = 3 * n - 6 if has_triangle(graph) else 2 * n - 4
+                verdict = f"m = {m} > {bound}: certainly not planar"
+            else:
+                verdict = f"m = {m}: the bounds cannot decide"
+            draw(graph, title=f"{name}: {verdict}", **options)

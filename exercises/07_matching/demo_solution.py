@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.graph import Graph, Vertex
 from lib.utils import format_path
+from lib.visualization import can_draw, draw, pause
 
 
 def find_augmenting_path(
@@ -208,3 +209,34 @@ if __name__ == "__main__":
     children = ["Pippi", "Tommy", "Annika"]
     print("Maximum matching:", maximum_bipartite_matching(horses, children))
     print("Hall violator:   ", hall_violator(horses, children))
+
+    # Drawings (only if matplotlib is installed; the windows do not block).
+    if can_draw():
+        # Animation: greedy matching -> augmenting path -> larger matching.
+        drawing = draw(
+            villa, title=f"Greedy matching: {len(greedy)} pairs", left=people, highlight_edges=list(greedy.items())
+        )
+        pause(1.5)
+        if path is not None:
+            drawing.update(
+                title="Augmenting path: alternates non-matching / matching edges",
+                highlight_edges=list(zip(path, path[1:])),
+                highlight_vertices=[path[0], path[-1]],
+                edge_labels={edge: str(i + 1) for i, edge in enumerate(zip(path, path[1:]))},
+            )
+            pause(2.0)
+            bigger = augment(greedy, path)
+            drawing.update(
+                title=f"After augmenting: {len(bigger)} pairs (maximum)",
+                highlight_edges=list(bigger.items()),
+                highlight_vertices=[],
+                edge_labels={},
+            )
+        violator = hall_violator(horses, children) or set()
+        draw(
+            horses,
+            title=f"Hall's condition fails for {sorted(violator)}",
+            left=children,
+            highlight_edges=list(maximum_bipartite_matching(horses, children).items()),
+            highlight_vertices=violator,
+        )

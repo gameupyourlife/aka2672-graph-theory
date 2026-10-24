@@ -22,6 +22,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 from lib.generators import complete_graph, petersen_graph, small_weighted_graph
 from lib.graph import Graph, Vertex
 from lib.utils import format_path
+from lib.visualization import can_draw, draw, pause
 
 # The seven bridges of Königsberg: (bridge, bank, bank). There are two
 # bridges between the island and the north bank and two between the island
@@ -262,3 +263,41 @@ if __name__ == "__main__":
     # The Petersen graph is 3-regular and connected, but has no Hamiltonian
     # cycle - the backtracking search tries everything and returns None.
     print("Hamiltonian cycle of the Petersen graph:", find_hamiltonian_cycle(petersen_graph()))
+
+    # Drawings (only if matplotlib is installed; the windows do not block).
+    if can_draw():
+        # Königsberg like on a map: land masses and bridges (as extra vertices).
+        city_map = {
+            "Nord": (0.5, 2.2), "Insel": (0, 0), "Süd": (0.5, -2.2), "Ost": (3.2, 0),
+            "b1": (-0.6, 1.1), "b2": (0.6, 1.1), "b3": (-0.6, -1.1), "b4": (0.6, -1.1),
+            "b5": (1.6, 0), "b6": (2.1, 1.3), "b7": (2.1, -1.3),
+        }
+        land = ["Insel", "Nord", "Süd", "Ost"]
+        draw(
+            koenigsberg,
+            title="Königsberg: all four land masses have odd degree",
+            layout=city_map,
+            vertex_colors={v: "land" if v in land else "bridge" for v in koenigsberg.vertices()},
+            highlight_vertices=land,
+            vertex_labels={v: f"deg {koenigsberg.degree(v)}" for v in land},
+        )
+
+        # Animation: drawing the Nikolaus house without lifting the pen.
+        house = {1: (0, 0), 2: (2, 0), 3: (0, 2), 4: (2, 2), 5: (1, 3.3)}
+        trail = find_euler_trail(nikolaus) or []
+        drawing = draw(nikolaus, title="Das ist das Haus vom Ni-ko-laus", layout=house)
+        for step in range(1, len(trail)):
+            steps = list(zip(trail, trail[1:]))[:step]
+            drawing.update(
+                title=f"Euler trail, step {step} of {len(trail) - 1}",
+                highlight_edges=steps,
+                edge_labels={edge: str(i + 1) for i, edge in enumerate(steps)},
+                highlight_vertices=[trail[0], trail[step]],
+            )
+            pause(0.6)
+
+        draw(
+            petersen_graph(),
+            title="Petersen graph: 3-regular, connected, no Hamiltonian cycle",
+            shells=[range(5), range(5, 10)],
+        )

@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 from lib.generators import small_weighted_graph
 from lib.graph import Graph, Vertex
 from lib.utils import format_path
+from lib.visualization import can_draw, draw
 
 
 def dijkstra(graph: Graph, start: Vertex) -> tuple[dict[Vertex, float], dict[Vertex, Vertex | None]]:
@@ -177,3 +178,29 @@ if __name__ == "__main__":
         bellman_ford(cycle, "s")
     except ValueError as error:
         print("Bellman-Ford refuses:", error)
+
+    # Drawings (only if matplotlib is installed; the windows do not block).
+    if can_draw():
+        # The shortest-path tree: the edges (parent[v], v) in red.
+        draw(
+            graph,
+            title="Dijkstra from Katthult: distances and shortest-path tree",
+            highlight_edges=[(p, v) for v, p in parent.items() if p is not None],
+            highlight_vertices=["Katthult"],
+            vertex_labels={v: f"d = {d}" for v, d in dist.items()},
+        )
+        route = shortest_route(graph, "Katthult", "Backhorva")
+        if route is not None:
+            path, length = route
+            draw(
+                graph,
+                title=f"Fastest way Katthult -> Backhorva: {length} minutes",
+                highlight_edges=list(zip(path, path[1:])),
+                highlight_vertices=[path[0], path[-1]],
+            )
+        bf_dist, _ = bellman_ford(bad, "s")
+        draw(
+            bad,
+            title="Negative weight: Dijkstra refuses, Bellman-Ford finds d(a) = 1",
+            vertex_labels={v: f"d = {d}" for v, d in bf_dist.items()},
+        )

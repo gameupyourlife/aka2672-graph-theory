@@ -12,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.graph import Graph, Vertex
-from lib.visualization import print_graph, draw
+from lib.visualization import can_draw, draw, print_graph
 
 # The data from README.md, written as lists of pairs. Keeping data separate
 # from code makes it easy to check against the table.
@@ -154,7 +154,6 @@ def complement(graph: Graph) -> Graph:
 if __name__ == "__main__":
     bullerby = build_bullerby_graph()
     print_graph(bullerby)
-    draw(bullerby)
     print("Degrees:", degrees(bullerby))
     print("Degree sequence:", degree_sequence(bullerby))
     odd = odd_degree_vertices(bullerby)
@@ -163,8 +162,22 @@ if __name__ == "__main__":
     print()
     letters = build_letter_graph()
     print_graph(letters)
-    draw(letters)
     print("(in, out):", in_and_out_degrees(letters))
     print()
     for row in adjacency_matrix(bullerby):
         print(row)
+
+    # Drawings (only if matplotlib is installed). The windows do not block:
+    # the program continues, and they stay open until you close them.
+    if can_draw():
+        draw(
+            bullerby,
+            title=f"Bullerbü: {len(odd)} vertices with odd degree (red)",
+            highlight_vertices=odd,
+            vertex_labels={v: f"deg {d}" for v, d in degrees(bullerby).items()},
+        )
+        draw(
+            letters,
+            title="Who writes letters to whom?",
+            vertex_labels={v: f"in {i} / out {o}" for v, (i, o) in in_and_out_degrees(letters).items()},
+        )

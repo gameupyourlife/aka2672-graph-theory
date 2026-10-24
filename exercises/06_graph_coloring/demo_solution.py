@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.generators import cycle_graph, petersen_graph
 from lib.graph import Graph, Vertex
+from lib.visualization import can_draw, draw
 
 # Pippi's party in Villa Kunterbunt (see README.md): all guests, and the
 # pairs of guests who must not sit at the same table.
@@ -241,3 +242,29 @@ if __name__ == "__main__":
     print("Petersen graph, Welsh-Powell order:", welsh_powell_order(petersen))
     print("Petersen graph, greedy colours:", number_of_colors(greedy_coloring(petersen, welsh_powell_order(petersen))))
     print("C_7 bipartite?", is_bipartite(cycle_graph(7)), "- odd cycle:", find_odd_cycle(cycle_graph(7)))
+
+    # Drawings (only if matplotlib is installed; the windows do not block).
+    if can_draw():
+        odd_cycle = find_odd_cycle(party) or []
+        draw(
+            party,
+            title=f"Pippi's party: {number_of_colors(tables)} tables (odd cycle in red)",
+            vertex_colors={guest: f"table {t}" for guest, t in tables.items()},
+            highlight_edges=list(zip(odd_cycle, odd_cycle[1:])),
+        )
+        a_side = [("a", i) for i in range(n)]
+        for name, order in [("alternating order", alternating), ("one side first", sides)]:
+            coloring = greedy_coloring(crown, order)
+            draw(
+                crown,
+                title=f"Crown graph, {name}: {number_of_colors(coloring)} colours",
+                left=a_side,
+                vertex_colors=coloring,
+            )
+        petersen_colors = greedy_coloring(petersen, welsh_powell_order(petersen))
+        draw(
+            petersen,
+            title=f"Petersen graph, Welsh-Powell: {number_of_colors(petersen_colors)} colours",
+            shells=[range(5), range(5, 10)],
+            vertex_colors=petersen_colors,
+        )
