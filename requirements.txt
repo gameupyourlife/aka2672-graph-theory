@@ -1,0 +1,6 @@
+# Die Übungen benötigen nur die Python-Standardbibliothek (Python 3.11+).
+# pytest wird zum Ausführen der automatischen Tests gebraucht:
+pytest>=7.0
+
+# Optional, nur für lib.visualization.draw() (grafische Darstellung):
+# matplotlib>=3.7

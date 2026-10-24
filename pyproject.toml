@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "graphentheorie-kurs"
+version = "1.0.0"
+description = "Python-Übungen für einen 30-stündigen Graphentheorie-Kurs (Aka Kunterbunt)"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7.0"]
+plot = ["matplotlib>=3.7"]
+
+[tool.setuptools]
+packages = ["lib"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "exercises"]
+python_files = ["test_*.py"]
+# "importlib" allows several files with the same name (test_task.py) in
+# different folders; "pythonpath" makes ``import lib`` work everywhere.
+addopts = "--import-mode=importlib"
+pythonpath = ["."]
