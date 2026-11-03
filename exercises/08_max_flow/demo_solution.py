@@ -32,7 +32,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.graph import Graph, Vertex
 from lib.utils import format_path
-from lib.visualization import can_draw, draw, pause
+from lib.visualization import show, snapshot
 
 Flow = dict[tuple[Vertex, Vertex], float]
 
@@ -201,39 +201,26 @@ if __name__ == "__main__":
     print("Augmenting path:", format_path(find_augmenting_path(residual, "s", "t")))
     print("Edmonds-Karp:", edmonds_karp(small, "s", "t"))
 
-    # Drawings (only if matplotlib is installed; the windows do not block).
-    if can_draw():
-        network = {"s": (0, 0), "v1": (1, 1), "v2": (1, -1), "v3": (2, 1), "v4": (2, -1), "t": (3, 0)}
-
-        def flow_labels(current: Flow) -> dict[tuple[Vertex, Vertex], str]:
-            """Label every edge with "flow / capacity"."""
-            return {(u, v): f"{current.get((u, v), 0)}/{c}" for u, v, c in clrs.edges()}
-
-        # Animation: Edmonds-Karp step by step (the same loop as above).
-        current: Flow = {(u, v): 0 for u, v, _ in clrs.edges()}
-        total = 0
-        drawing = draw(
-            clrs, title="Edmonds-Karp: start with the zero flow", layout=network, edge_labels=flow_labels(current)
-        )
-        pause(1.0)
-        while True:
-            residual = residual_graph(clrs, current)
-            path = find_augmenting_path(residual, "s", "t")
-            if path is None:
-                break
-            delta = min(residual.weight(path[i], path[i + 1]) for i in range(len(path) - 1))
-            # Show the path on the original edges (a backward edge v -> u is drawn as u -> v).
-            on_graph = [(u, v) if clrs.has_edge(u, v) else (v, u) for u, v in zip(path, path[1:])]
-            drawing.update(title=f"Augmenting path {format_path(path)}, bottleneck {delta}", highlight_edges=on_graph)
-            pause(1.2)
-            for u, v in zip(path, path[1:]):
-                _push(current, u, v, delta)
-            total += delta
-            drawing.update(title=f"Flow value {total}", edge_labels=flow_labels(current), highlight_edges=[])
-            pause(0.8)
-        side = min_cut(clrs, "s", "t")
-        drawing.update(
-            title=f"Maximum flow {total} = capacity of the minimum cut (red edges)",
-            vertex_colors={v: "S" if v in side else "T" for v in clrs.vertices()},
-            highlight_edges=[(u, v) for u, v, _ in clrs.edges() if u in side and v not in side],
-        )
+    # Pictures in the browser (no extra packages needed).
+    network = {"s": (0, 0), "v1": (1, 1), "v2": (1, -1), "v3": (2, 1), "v4": (2, -1), "t": (3, 0)}
+    cut_edges = [(u, v) for u, v, _ in clrs.edges() if u in cut and v not in cut]
+    show(
+        snapshot(
+            clrs,
+            f"Maximum flow {value} = capacity of the minimum cut (red edges)",
+            layout=network,
+            edge_labels={(u, v): f"{flow[(u, v)]}/{c}" for u, v, c in clrs.edges()},
+            edge_flags={edge: ["cut"] for edge in cut_edges},
+            vertex_colors={v: "S" if v in cut else "T" for v in clrs.vertices()},
+            vertex_flags={"s": ["start"], "t": ["target"]},
+        ),
+        snapshot(
+            residual,
+            "Residual network of the flow s -> a -> b -> t",
+            layout={"s": (0, 0), "a": (1, 1), "b": (1, -1), "t": (2, 0)},
+            show_weights=True,
+            vertex_flags={"s": ["start"], "t": ["target"]},
+        ),
+        title="Unit 8: results",
+    )
+    print("Step by step: python exercises/08_max_flow/demo_animation.py")

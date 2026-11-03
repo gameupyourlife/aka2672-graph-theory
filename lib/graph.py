@@ -21,6 +21,15 @@ Design decisions (important for all exercises):
 * **Deterministic order.** ``vertices()``, ``neighbors()`` and ``edges()``
   return their elements in insertion order. This makes outputs reproducible.
 * Accessing a vertex that does not exist raises a ``KeyError``.
+* **Attributes.** Vertices and edges can carry additional data in a
+  dictionary, e.g. a position for drawings or a display name::
+
+      graph.add_vertex("Katthult", pos=(0, 1), label="Hof Katthult")
+      graph.vertex_attributes("Katthult")["pos"]   # (0, 1)
+
+  Attributes describe the *problem* (positions, names, ...). The *state of an
+  algorithm* (visited, current, ...) belongs into a ``lib.trace.Trace``, so
+  that algorithms never have to change their input graph.
 
 The class deliberately contains **no** graph algorithms (no BFS, DFS,
 Dijkstra, ...). These are implemented by you in the exercises.
@@ -30,7 +39,7 @@ from __future__ import annotations
 
 import math
 from collections.abc import Hashable, Iterable, Iterator
-from typing import NamedTuple
+from typing import Any, NamedTuple
 
 Vertex = Hashable
 """Type alias for vertices: any hashable value (str, int, tuple, ...)."""
@@ -81,6 +90,11 @@ class Graph:
         self._pred: dict[Vertex, dict[Vertex, float]] = (
             {} if directed else self._succ
         )
+        # Optional data of vertices and edges (see vertex_attributes()).
+        # For an undirected edge the same dictionary is stored under
+        # (u, v) and (v, u).
+        self._vertex_attrs: dict[Vertex, dict[str, Any]] = {}
+        self._edge_attrs: dict[tuple[Vertex, Vertex], dict[str, Any]] = {}
 
     # ------------------------------------------------------------------
     # Construction
@@ -116,19 +130,29 @@ class Graph:
         """``True`` if the graph is directed, otherwise ``False``."""
         return self._directed
 
-    def add_vertex(self, v: Vertex) -> None:
-        """Add the vertex ``v``. Adding an existing vertex does nothing."""
+    def add_vertex(self, v: Vertex, **attributes: Any) -> None:
+        """Add the vertex ``v``.
+
+        Adding an existing vertex does not change its edges; given
+        attributes are added to (or overwrite) its existing attributes.
+
+        Example::
+
+            graph.add_vertex("Katthult", pos=(0, 1))
+        """
         if v not in self._succ:
             self._succ[v] = {}
+            self._vertex_attrs[v] = {}
             if self._directed:
                 self._pred[v] = {}
+        self._vertex_attrs[v].update(attributes)
 
     def add_vertices(self, vertices: Iterable[Vertex]) -> None:
         """Add several vertices at once."""
         for v in vertices:
             self.add_vertex(v)
 
-    def add_edge(self, u: Vertex, v: Vertex, weight: float = 1) -> None:
+    def add_edge(self, u: Vertex, v: Vertex, weight: float = 1, **attributes: Any) -> None:
         """Add the edge ``u -- v`` (undirected) or ``u -> v`` (directed).
 
         Missing end vertices are added automatically.
@@ -138,6 +162,8 @@ class Graph:
             v: Second end vertex (head of a directed edge).
             weight: Weight of the edge (length, cost, capacity, ...).
                 Defaults to ``1`` for unweighted graphs.
+            **attributes: Optional data of the edge, e.g. ``label="B1"``
+                (see :meth:`edge_attributes`).
 
         Raises:
             ValueError: If ``u == v`` (loops are not allowed), if the edge
@@ -152,6 +178,10 @@ class Graph:
         self.add_vertex(v)
         self._succ[u][v] = weight
         self._pred[v][u] = weight
+        data = dict(attributes)
+        self._edge_attrs[(u, v)] = data
+        if not self._directed:
+            self._edge_attrs[(v, u)] = data  # one shared dictionary
 
     def add_edges(
         self,
@@ -191,6 +221,9 @@ class Graph:
             raise KeyError(f"Edge {u!r} -- {v!r} does not exist")
         del self._succ[u][v]
         del self._pred[v][u]
+        del self._edge_attrs[(u, v)]
+        if not self._directed:
+            del self._edge_attrs[(v, u)]
 
     def remove_vertex(self, v: Vertex) -> None:
         """Remove the vertex ``v`` together with all incident edges.
@@ -204,6 +237,7 @@ class Graph:
         for w in list(self._pred[v]):
             self.remove_edge(w, v)
         del self._succ[v]
+        del self._vertex_attrs[v]
         if self._directed:
             del self._pred[v]
 
@@ -227,6 +261,32 @@ class Graph:
         if not self.has_edge(u, v):
             raise KeyError(f"Edge {u!r} -- {v!r} does not exist")
         return self._succ[u][v]
+
+    def vertex_attributes(self, v: Vertex) -> dict[str, Any]:
+        """Return the attribute dictionary of the vertex ``v``.
+
+        The dictionary belongs to the graph: changes are stored directly::
+
+            graph.vertex_attributes("A")["pos"] = (0, 0)
+
+        Raises:
+            KeyError: If ``v`` is not a vertex of the graph.
+        """
+        self._require_vertex(v)
+        return self._vertex_attrs[v]
+
+    def edge_attributes(self, u: Vertex, v: Vertex) -> dict[str, Any]:
+        """Return the attribute dictionary of the edge ``u -- v`` / ``u -> v``.
+
+        For an undirected edge, ``edge_attributes(u, v)`` and
+        ``edge_attributes(v, u)`` are the same dictionary.
+
+        Raises:
+            KeyError: If the edge does not exist.
+        """
+        if not self.has_edge(u, v):
+            raise KeyError(f"Edge {u!r} -- {v!r} does not exist")
+        return self._edge_attrs[(u, v)]
 
     def vertices(self) -> list[Vertex]:
         """Return a list of all vertices (in insertion order)."""
@@ -310,14 +370,16 @@ class Graph:
     # Copying and checking
     # ------------------------------------------------------------------
     def copy(self) -> Graph:
-        """Return an independent copy of the graph.
+        """Return an independent copy of the graph (including attributes).
 
         Changes to the copy do not affect the original and vice versa.
+        (Attribute *values* such as lists are not copied themselves.)
         """
         new = Graph(directed=self._directed)
-        new.add_vertices(self.vertices())
+        for v in self.vertices():
+            new.add_vertex(v, **self._vertex_attrs[v])
         for u, v, weight in self.edges():
-            new.add_edge(u, v, weight)
+            new.add_edge(u, v, weight, **self._edge_attrs[(u, v)])
         return new
 
     def check_consistency(self) -> None:
@@ -330,7 +392,8 @@ class Graph:
         * there are no loops,
         * all weights are finite numbers,
         * undirected: ``u -- v`` is stored in both directions with the same
-          weight; directed: successor and predecessor lists match.
+          weight; directed: successor and predecessor lists match,
+        * every vertex and every edge has exactly one attribute dictionary.
 
         Raises:
             ValueError: With a description of the first problem found.
@@ -346,6 +409,11 @@ class Graph:
                     raise ValueError(
                         f"Edge {u!r} -- {v!r} is not stored consistently"
                     )
+        if set(self._vertex_attrs) != set(self._succ):
+            raise ValueError("Vertex attributes do not match the vertices")
+        stored_pairs = {(u, v) for u, neighbours in self._succ.items() for v in neighbours}
+        if set(self._edge_attrs) != stored_pairs:
+            raise ValueError("Edge attributes do not match the edges")
         if self._directed:
             if set(self._pred) != set(self._succ):
                 raise ValueError("Successor and predecessor lists differ")
@@ -372,7 +440,10 @@ class Graph:
         return len(self._succ)
 
     def __eq__(self, other: object) -> bool:
-        """Two graphs are equal if they have the same vertices and edges."""
+        """Two graphs are equal if they have the same vertices and edges.
+
+        Attributes are not compared.
+        """
         if not isinstance(other, Graph):
             return NotImplemented
         return self._directed == other._directed and self._succ == other._succ

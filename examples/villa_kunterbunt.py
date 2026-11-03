@@ -16,7 +16,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # find ``lib``
 
 from lib.graph import Graph
 from lib.testing import assert_valid_coloring, assert_valid_matching
-from lib.visualization import can_draw, draw, print_graph, to_dot
+from lib.visualization import print_graph, show, snapshot, to_dot
 
 # Rooms of the villa. Two rooms are adjacent if they share a wall;
 # adjacent rooms must be painted in different colours.
@@ -78,9 +78,12 @@ def main() -> None:
     print("\n--- DOT export with colours ---")
     print(to_dot(rooms, name="Villa Kunterbunt", vertex_colors=coloring))
 
-    if can_draw():  # windows open without blocking (needs matplotlib)
-        draw(rooms, title="Villa Kunterbunt: rooms and paint colours", vertex_colors=coloring)
-        draw(animals, title="Who looks after which animal?", left=WISHES, highlight_edges=list(matching.items()))
+    matched = {pair: ["matched"] for pair in matching.items()}
+    show(
+        snapshot(rooms, "Rooms and paint colours", vertex_colors=coloring),
+        snapshot(animals, "Who looks after which animal?", left=WISHES, edge_flags=matched),
+        title="Villa Kunterbunt",
+    )
 
 
 if __name__ == "__main__":

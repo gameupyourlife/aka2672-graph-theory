@@ -1,4 +1,4 @@
-"""Tests for the vertex layouts (lib/layout.py). No matplotlib needed."""
+"""Tests for the vertex layouts (lib/layout.py)."""
 
 import math
 

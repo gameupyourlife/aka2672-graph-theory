@@ -21,10 +21,10 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
-from lib.generators import grid_graph, random_graph
+from lib.generators import random_graph
 from lib.graph import Graph, Vertex
 from lib.utils import format_path
-from lib.visualization import can_draw, draw, pause
+from lib.visualization import show, snapshot
 
 
 def bfs(graph: Graph, start: Vertex) -> tuple[dict[Vertex, int], dict[Vertex, Vertex | None]]:
@@ -179,36 +179,23 @@ if __name__ == "__main__":
     print("Connected:", is_connected(example))
     print("BFS layers:", bfs_layers(example, "A"))
 
-    # Drawings (only if matplotlib is installed; the windows do not block).
-    if can_draw():
-        # The BFS tree: one column per layer, the tree edges (parent[v], v) in red.
-        draw(
+    # Pictures in the browser (no extra packages needed).
+    random_example = random_graph(18, 0.1, seed=3)
+    components = connected_components(random_example)
+    show(
+        snapshot(
             example,
-            title="BFS from A: layers, distances and BFS tree",
+            "BFS from A: layers, distances and BFS tree",
             layers=bfs_layers(example, "A"),
             highlight_edges=[(p, v) for v, p in parent.items() if p is not None],
             vertex_labels={v: f"d = {d}" for v, d in distance.items()},
-        )
-
-        # Animation: BFS explores a grid layer by layer (like a wave).
-        grid = grid_graph(5, 8)
-        grid_distance, grid_parent = bfs(grid, (0, 0))
-        drawing = draw(grid, title="BFS on a grid", highlight_vertices=[(0, 0)], legend=False)
-        for d in range(max(grid_distance.values()) + 1):
-            reached = {v: k for v, k in grid_distance.items() if k <= d}
-            drawing.update(
-                title=f"BFS on a grid: all vertices with distance <= {d}",
-                vertex_colors=reached,
-                highlight_edges=[(p, v) for v, p in grid_parent.items() if p is not None and v in reached],
-            )
-            pause(0.4)
-
-        # Connected components get different colours.
-        random_example = random_graph(18, 0.1, seed=3)
-        components = connected_components(random_example)
-        draw(
+            vertex_flags={"A": ["start"]},
+        ),
+        snapshot(
             random_example,
-            title=f"{len(components)} connected components",
+            f"{len(components)} connected components",
             vertex_colors={v: i for i, component in enumerate(components) for v in component},
-            legend=False,
-        )
+        ),
+        title="Unit 2: results",
+    )
+    print("Step by step: python exercises/02_bfs_dfs/demo_animation.py")

@@ -2,8 +2,5 @@
 # pytest wird zum Ausführen der automatischen Tests gebraucht:
 pytest>=7.0
 
-# Optional, aber empfohlen: grafische Darstellung mit lib.visualization.draw()
-# (die Musterlösungen und Beispiele zeichnen damit ihre Ergebnisse).
-# Zum Installieren die nächste Zeile einkommentieren oder
-# "python -m pip install matplotlib" ausführen:
-# matplotlib>=3.7
+# Die Visualisierung (lib.viewer) zeigt Graphen im Webbrowser und braucht
+# ebenfalls keine weiteren Pakete.

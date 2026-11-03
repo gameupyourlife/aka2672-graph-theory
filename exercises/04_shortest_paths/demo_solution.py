@@ -23,7 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 from lib.generators import small_weighted_graph
 from lib.graph import Graph, Vertex
 from lib.utils import format_path
-from lib.visualization import can_draw, draw
+from lib.visualization import show, snapshot
 
 
 def dijkstra(graph: Graph, start: Vertex) -> tuple[dict[Vertex, float], dict[Vertex, Vertex | None]]:
@@ -179,28 +179,35 @@ if __name__ == "__main__":
     except ValueError as error:
         print("Bellman-Ford refuses:", error)
 
-    # Drawings (only if matplotlib is installed; the windows do not block).
-    if can_draw():
-        # The shortest-path tree: the edges (parent[v], v) in red.
-        draw(
+    # Pictures in the browser (no extra packages needed).
+    scenes = [
+        # The shortest-path tree: the edges (parent[v], v).
+        snapshot(
             graph,
-            title="Dijkstra from Katthult: distances and shortest-path tree",
+            "Dijkstra from Katthult: distances and shortest-path tree",
             highlight_edges=[(p, v) for v, p in parent.items() if p is not None],
-            highlight_vertices=["Katthult"],
+            vertex_flags={"Katthult": ["start"]},
             vertex_labels={v: f"d = {d}" for v, d in dist.items()},
         )
-        route = shortest_route(graph, "Katthult", "Backhorva")
-        if route is not None:
-            path, length = route
-            draw(
+    ]
+    route = shortest_route(graph, "Katthult", "Backhorva")
+    if route is not None:
+        path, length = route
+        scenes.append(
+            snapshot(
                 graph,
-                title=f"Fastest way Katthult -> Backhorva: {length} minutes",
-                highlight_edges=list(zip(path, path[1:])),
-                highlight_vertices=[path[0], path[-1]],
+                f"Fastest way Katthult -> Backhorva: {length} minutes",
+                edge_flags={(u, v): ["path"] for u, v in zip(path, path[1:])},
+                vertex_flags={path[0]: ["start"], path[-1]: ["target"]},
             )
-        bf_dist, _ = bellman_ford(bad, "s")
-        draw(
+        )
+    bf_dist, _ = bellman_ford(bad, "s")
+    scenes.append(
+        snapshot(
             bad,
-            title="Negative weight: Dijkstra refuses, Bellman-Ford finds d(a) = 1",
+            "Negative weight: Dijkstra refuses, Bellman-Ford finds d(a) = 1",
             vertex_labels={v: f"d = {d}" for v, d in bf_dist.items()},
         )
+    )
+    show(*scenes, title="Unit 4: results")
+    print("Step by step: python exercises/04_shortest_paths/demo_animation.py")

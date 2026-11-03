@@ -12,7 +12,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.graph import Graph, Vertex
-from lib.visualization import can_draw, draw, print_graph
+from lib.visualization import print_graph, show, snapshot
 
 # The data from README.md, written as lists of pairs. Keeping data separate
 # from code makes it easy to check against the table.
@@ -167,17 +167,20 @@ if __name__ == "__main__":
     for row in adjacency_matrix(bullerby):
         print(row)
 
-    # Drawings (only if matplotlib is installed). The windows do not block:
-    # the program continues, and they stay open until you close them.
-    if can_draw():
-        draw(
+    # Pictures in the browser (no extra packages needed): one page, one tab per picture.
+    show(
+        snapshot(
             bullerby,
-            title=f"Bullerbü: {len(odd)} vertices with odd degree (red)",
+            f"Bullerbü: {len(odd)} vertices with odd degree",
             highlight_vertices=odd,
             vertex_labels={v: f"deg {d}" for v, d in degrees(bullerby).items()},
-        )
-        draw(
+            message="The handshake lemma: the number of vertices with odd degree is even.",
+        ),
+        snapshot(
             letters,
-            title="Who writes letters to whom?",
+            "Who writes letters to whom?",
             vertex_labels={v: f"in {i} / out {o}" for v, (i, o) in in_and_out_degrees(letters).items()},
-        )
+            message="In a directed graph: sum of in-degrees = sum of out-degrees = |E|.",
+        ),
+        title="Unit 1: Bullerbü",
+    )

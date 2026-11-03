@@ -22,8 +22,6 @@ Ab und zu begegnen Ihnen Orte und Figuren aus den Büchern von Astrid Lindgren: 
    python -m pip install -r requirements.txt
    ```
 
-   Empfohlen, aber nicht nötig: `python -m pip install matplotlib`. Dann zeichnen die Musterlösungen und Beispiele ihre Ergebnisse in Fenstern.
-
 4. **Erste Übung starten:** Lesen Sie `exercises/01_graph_basics/README.md` und bearbeiten Sie `exercises/01_graph_basics/task.py`.
 5. **Testen:**
 
@@ -35,7 +33,7 @@ Am Anfang schlagen die Tests fehl (`NotImplementedError: TODO ...`). Mit jeder F
 
 ## So arbeiten Sie mit den Übungen
 
-Jede Einheit liegt in einem eigenen Ordner unter `exercises/` und besteht aus vier Dateien:
+Jede Einheit liegt in einem eigenen Ordner unter `exercises/` und besteht aus diesen Dateien:
 
 | Datei | Inhalt |
 |---|---|
@@ -43,6 +41,7 @@ Jede Einheit liegt in einem eigenen Ordner unter `exercises/` und besteht aus vi
 | `task.py` | **Ihre Datei.** Funktionsköpfe mit Beschreibung und `TODO`-Kommentaren. Ersetzen Sie `raise NotImplementedError(...)` durch Ihren Code. |
 | `test_task.py` | Automatische Tests. Sie prüfen standardmäßig Ihre `task.py`. |
 | `demo_solution.py` | Kommentierte Musterlösung (in der Studierendenversion nicht enthalten) |
+| `demo_animation.py` | Einheiten 2–9: der Algorithmus als Schritt-für-Schritt-Animation im Browser (nur Lehrendenversion) |
 
 Arbeitsablauf:
 
@@ -56,14 +55,18 @@ Arbeitsablauf:
 ```text
 graphentheorie-kurs/
 ├── README.md              diese Datei
+├── docs/                  Dokumentation der Bibliothek
 ├── pyproject.toml         Projekt- und pytest-Konfiguration
 ├── requirements.txt       benötigte Pakete (nur pytest)
 ├── conftest.py            pytest-Option --impl=task|demo
 ├── lib/                   gemeinsame Bibliothek
 │   ├── graph.py           Klasse Graph (Adjazenzlisten)
 │   ├── generators.py      Beispielgraphen (Pfade, Kreise, Zufallsgraphen, ...)
-│   ├── visualization.py   Textausgabe, Graphviz-DOT-Export, Zeichnen mit matplotlib (optional)
+│   ├── trace.py           Algorithmen aufzeichnen: Flags, Beschriftungen, Variablen, Schritte
+│   ├── viewer.py          Player im Webbrowser (show, draw, snapshot)
+│   ├── viewer_assets/     HTML/CSS/JavaScript des Players
 │   ├── layout.py          Knotenpositionen für Zeichnungen
+│   ├── visualization.py   Sammelmodul: Text- und Graphviz-Ausgabe, Player
 │   ├── testing.py         Prüffunktionen für Wege, Bäume, Färbungen, Matchings, Flüsse
 │   └── utils.py           Hilfsfunktionen (andere Übungen laden, Zeitmessung, ...)
 ├── exercises/             die zehn Einheiten
@@ -143,8 +146,11 @@ print(graph.edges())                 # [Edge(u='Bullerby', v='Lonneberga', weigh
 Weitere Module:
 
 - `lib.generators`: `path_graph`, `cycle_graph`, `complete_graph`, `complete_bipartite_graph`, `star_graph`, `grid_graph`, `petersen_graph`, `random_graph`, `random_tree`, `random_connected_graph`, `random_bipartite_graph`, `random_weighted_graph`, `small_weighted_graph`. Zufallsgeneratoren haben einen optionalen `seed` für reproduzierbare Ergebnisse.
-- `lib.visualization`: `print_graph(graph)` für die Konsole, `to_dot`/`save_dot` für Graphviz (mit hervorgehobenen Kanten und Knotenfarben), `draw(graph)` zeichnet mit matplotlib in einem nicht blockierenden Fenster, das sich für Animationen aktualisieren lässt (siehe [Visualisierung](#visualisierung)).
-- `lib.layout`: Knotenpositionen zum Zeichnen (Kreis, konzentrische Kreise, kräftebasiert, bipartit, Schichten, Gitter), reines Python.
+- `lib.visualization`: `print_graph(graph)` für die Konsole, `to_dot`/`save_dot` für Graphviz und der interaktive Player: `draw`, `show`, `snapshot`, `Trace` (siehe [Visualisierung](#visualisierung)).
+- `lib.trace` und `lib.viewer`: Algorithmen aufzeichnen und im Browser abspielen.
+- `lib.layout`: Knotenpositionen zum Zeichnen (Kreis, konzentrische Kreise, kräftebasiert, bipartit, Schichten, Gitter).
+
+Die vollständige Dokumentation der Bibliothek steht im Ordner [`docs/`](docs/README.md).
 - `lib.testing`: `assert_valid_path`, `assert_valid_spanning_tree`, `assert_valid_spanning_forest`, `assert_valid_coloring`, `assert_valid_matching`, `assert_valid_flow`, `assert_valid_euler_circuit`, `assert_valid_hamiltonian_cycle`, `flow_value`, `cut_capacity`. Diese Funktionen **prüfen** Ergebnisse, sie berechnen sie nicht.
 - `lib.utils`: `load_exercise("02_bfs_dfs", "task")` lädt eine andere Übung, `path_weight`, `format_path`, `measure_time`.
 
@@ -170,39 +176,41 @@ Statt `--impl=demo` können Sie auch die Umgebungsvariable `GRAPH_COURSE_IMPL=de
 
 ## Visualisierung
 
-Die Übungen benötigen keine grafische Ausgabe. `print_graph` zeigt jeden Graphen als Adjazenzliste in der Konsole.
+Graphen und Algorithmen lassen sich interaktiv im **Webbrowser** ansehen. Dafür wird kein zusätzliches Paket benötigt: Python erzeugt eine eigenständige HTML-Seite und öffnet sie. Die ausführliche Anleitung steht in [docs/visualisierung.md](docs/visualisierung.md).
 
-### Graphen zeichnen mit `draw` (empfohlen, optional)
-
-Mit matplotlib (`python -m pip install matplotlib`) zeichnet `lib.visualization.draw` Graphen in einem Fenster. Alle Musterlösungen und Beispiele zeigen ihre Ergebnisse auf diese Weise: Spannbäume, kürzeste Wege, Färbungen, Matchings und Flüsse. Einige Musterlösungen spielen den Algorithmus Schritt für Schritt als Animation ab, z. B. Breitensuche, Kruskal, das Haus vom Nikolaus, augmentierende Wege und Edmonds-Karp.
+**Ein Bild:**
 
 ```python
 from lib.visualization import draw
 
-draw(graph, title="Minimaler Spannbaum", highlight_edges=tree)            # Kanten rot hervorheben
-draw(graph, vertex_colors=coloring)                                       # Färbung mit Legende
-draw(graph, vertex_labels=distance, highlight_vertices=["Katthult"])      # Text unter Knoten
-draw(network, edge_labels={("s", "a"): "3/5"})                            # eigene Kantenbeschriftung
-draw(graph, left=people)                                                  # bipartit: zwei Spalten
-draw(graph, layers=bfs_layers)                                            # eine Spalte pro Schicht
-draw(graph, layout={"A": (0, 0), "B": (1, 2)})                            # eigene Koordinaten
-draw(graph, filename="bild.png")                                          # als Datei speichern
+draw(graph, "Minimaler Spannbaum", highlight_edges=tree)          # Kanten hervorheben
+draw(graph, "Färbung", vertex_colors=coloring)                     # Farbklassen mit Legende
+draw(graph, "Abstände", vertex_labels=distance)                    # Text unter den Knoten
+draw(network, "Fluss", edge_labels={("s", "a"): "3/5"})            # Text auf Kanten
 ```
 
-- **Blockiert nicht:** Das Programm läuft nach `draw` sofort weiter, mehrere Fenster sind möglich. Am Programmende bleiben die Fenster offen, bis Sie sie schließen.
-- **Animationen:** `draw` gibt ein Objekt zurück, dessen Darstellung sich mit `update(...)` im selben Fenster ändern lässt. `pause(sekunden)` wartet dazwischen:
+**Ein Algorithmus Schritt für Schritt:** Ein `Trace` zeichnet den Zustand des Algorithmus auf. Flags wie `current`, `visited` oder `queued` färben Knoten und Kanten, Variablen erscheinen in einer Seitenleiste, `step()` nimmt ein Bild auf.
 
-  ```python
-  from lib.visualization import draw, pause
+```python
+from lib.visualization import Trace, show
 
-  drawing = draw(graph, title="Tiefensuche")
-  for step in range(1, len(order) + 1):
-      drawing.update(title=f"Schritt {step}", highlight_vertices=order[:step])
-      pause(0.5)
-  ```
+trace = Trace(graph, "BFS ab A", pseudocode=["Q = [s]", "solange Q nicht leer:", "..."])
+trace.flag("A", "start", "queued")
+trace.variable("Q", ["A"])
+trace.step("A kommt in die Warteschlange.", line=1)
+...
+show(trace)
+```
 
-- **Anordnung der Knoten** (`lib.layout`): Standardmäßig wird ein passendes Layout gewählt. Gitter werden als Gitter gezeichnet, vollständige Graphen und Kreise auf einem Kreis, alle anderen mit einem kräftebasierten Verfahren (Fruchterman-Reingold), bei dem Komponenten nebeneinander liegen. Mit `layout="circular"`, `"spring"`, `"shell"` (z. B. `shells=[range(5), range(5, 10)]` für den Petersen-Graphen), `"bipartite"`, `"layered"`, `"grid"` oder eigenen Koordinaten wählen Sie selbst.
-- **Ohne matplotlib** laufen alle Programme trotzdem. Sie prüfen vorher mit `can_draw()`, ob gezeichnet werden kann. Setzen Sie die Umgebungsvariable `GRAPH_COURSE_NO_PLOTS=1`, um alle Fenster abzuschalten (z. B. bei automatischen Läufen).
+Der Player bietet ◀ / ▶ (auch mit den Pfeiltasten), automatisches Abspielen mit einstellbarer Geschwindigkeit, einen Schieberegler, Pseudocode mit hervorgehobener Zeile, Variablen, Legende, Zoom und Verschieben, verschiebbare Knoten, Tooltips und Export als SVG oder PNG. Mehrere Szenen (`show(trace1, trace2, …)`) erscheinen als Reiter auf einer Seite.
+
+Die Musterlösungen zeigen ihre Ergebnisse auf diese Weise. Die Dateien `demo_animation.py` der Einheiten 2–9 spielen die Algorithmen Schritt für Schritt ab:
+
+```bash
+python exercises/02_bfs_dfs/demo_animation.py
+```
+
+Mit `GRAPH_COURSE_NO_PLOTS=1` wird kein Browser geöffnet (nur die HTML-Datei geschrieben), z. B. bei automatischen Läufen.
 
 ### Export für Graphviz
 
@@ -215,7 +223,8 @@ Die Datei lässt sich mit Graphviz (`dot -Tpng graph.dot -o graph.png`) oder onl
 
 ## Hinweise für Lehrende
 
-- **Studierendenversion:** `python tools/make_student_version.py` erzeugt `dist/graphentheorie-kurs-studierende.zip` ohne die Dateien `demo_solution.py`.
+- **Studierendenversion:** `python tools/make_student_version.py` erzeugt `dist/graphentheorie-kurs-studierende.zip` ohne die Dateien `demo_solution.py` und `demo_animation.py` (beide enthalten vollständige Lösungen).
+- **Animationen in der Vorlesung:** `python exercises/<einheit>/demo_animation.py` öffnet eine Seite mit allen Animationen der Einheit. Mit `show(..., filename="bfs.html")` entsteht eine Datei, die man ohne Python weitergeben kann.
 - **Qualitätssicherung:** `python -m pytest --impl=demo` muss vollständig grün sein. `tests/test_project_structure.py` prüft unter anderem, ob jede Einheit alle Dateien besitzt, ob die READMEs alle neun Abschnitte enthalten und ob `task.py` wirklich nur `TODO`s enthält (keine versehentlich mitgelieferte Lösung). Außerdem wird geprüft, ob `task.py` und `demo_solution.py` dieselben Schnittstellen haben.
 - **Abschlussprojekt:** In `exercises/10_final_project/task.py` legt die Konstante `PREVIOUS` fest, ob die eigenen Lösungen der Studierenden oder die Musterlösungen der früheren Einheiten verwendet werden. So können Gruppen auch dann arbeiten, wenn eine frühere Einheit unvollständig ist (nur in der Lehrendenversion, da die Studierendenversion keine Musterlösungen enthält).
 - Die Tests hängen nicht von Implementierungsdetails ab. Sie akzeptieren jede gültige Besuchsreihenfolge, jeden kürzesten Weg und jeden minimalen Spannbaum mit optimalem Gewicht.
@@ -229,6 +238,7 @@ Die Datei lässt sich mit Graphviz (`dot -Tpng graph.dot -o graph.png`) oder onl
 | `NotImplementedError: TODO: ...` | Die Funktion ist noch nicht implementiert. Das ist der Ausgangszustand. |
 | Syntaxfehler bei `int \| None` o. Ä. | Python-Version prüfen: mindestens 3.11 ist nötig. |
 | Umlaute werden falsch angezeigt | Terminal auf UTF-8 umstellen (Windows: `chcp 65001`) oder ein aktuelles Terminal wie Windows Terminal verwenden. |
+| Der Browser öffnet sich nicht | Ist `GRAPH_COURSE_NO_PLOTS` gesetzt? `show(...)` gibt den Pfad der HTML-Datei zurück; sie lässt sich auch von Hand öffnen. |
 
 ## Lizenz und Hinweise
 

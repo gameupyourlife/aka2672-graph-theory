@@ -28,7 +28,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 
 from lib.graph import Edge, Graph, Vertex
 from lib.utils import format_path, load_exercise, load_module_from_path
-from lib.visualization import can_draw, draw, print_graph
+from lib.visualization import print_graph, show, snapshot
 
 PREVIOUS = "demo_solution"
 
@@ -253,39 +253,49 @@ def main() -> None:
         if amount > 0:
             print(f"  {u} -> {v}: {amount}")
 
-    if can_draw():
-        _draw_report(nangijala)
+    _show_report(nangijala)
 
 
-def _draw_report(nangijala: Graph) -> None:
-    """Show the results of the modules on the map (needs matplotlib, does not block)."""
+def _show_report(nangijala: Graph) -> None:
+    """Show the results of the modules on the map of Nangijala (in the browser)."""
+    on_map = {"layout": data.POSITIONS}
     edges, total = winter_roads(nangijala)
-    draw(
-        nangijala,
-        title=f"Winterwege ({total} Minuten) und kritische Orte (rot umrandet)",
-        layout=data.POSITIONS,
-        highlight_edges=edges,
-        highlight_vertices=critical_places(nangijala),
-    )
+    critical = critical_places(nangijala)
+    pictures = [
+        snapshot(
+            nangijala,
+            "Winterwege und kritische Orte",
+            highlight_edges=edges,
+            vertex_flags={place: ["conflict"] for place in critical},
+            message=f"Minimaler Spannbaum: {total} Minuten. Rot gefüllt: Schnittknoten {', '.join(critical)}.",
+            **on_map,
+        )
+    ]
 
     route = fastest_route(nangijala, "Reiterhof", "Tengils Burg")
     if route is not None:
         path, minutes = route
-        draw(
-            nangijala,
-            title=f"Schnellster Weg Reiterhof -> Tengils Burg: {minutes} Minuten",
-            layout=data.POSITIONS,
-            highlight_edges=list(zip(path, path[1:])),
-            highlight_vertices=[path[0], path[-1]],
+        pictures.append(
+            snapshot(
+                nangijala,
+                "Schnellster Weg",
+                edge_flags={(u, v): ["path"] for u, v in zip(path, path[1:])},
+                vertex_flags={path[0]: ["start"], path[-1]: ["target"]},
+                message=f"Reiterhof -> Tengils Burg: {minutes} Minuten über {', '.join(path[1:-1])}.",
+                **on_map,
+            )
         )
 
     colors = lantern_colors(nangijala)
-    draw(
-        nangijala,
-        title=f"Laternenfarben: {coloring.number_of_colors(colors)} Farben",
-        layout=data.POSITIONS,
-        vertex_colors={place: f"Farbe {c}" for place, c in colors.items()},
-        show_weights=False,
+    pictures.append(
+        snapshot(
+            nangijala,
+            "Laternenfarben",
+            vertex_colors={place: f"Farbe {c}" for place, c in colors.items()},
+            message=f"{coloring.number_of_colors(colors)} Farben; benachbarte Orte leuchten verschieden.",
+            show_weights=False,
+            **on_map,
+        )
     )
 
     people = list(data.QUALIFICATIONS)
@@ -295,22 +305,34 @@ def _draw_report(nangijala: Graph) -> None:
         for task in tasks:
             qualified.add_edge(person, task)
     assignment = assign_tasks(data.QUALIFICATIONS)
-    draw(
-        qualified,
-        title=f"Aufgabenverteilung: {len(assignment)} von {len(people)} Personen",
-        left=people,
-        highlight_edges=list(assignment.items()),
+    pictures.append(
+        snapshot(
+            qualified,
+            "Aufgabenverteilung",
+            left=people,
+            edge_flags={pair: ["matched"] for pair in assignment.items()},
+            message=f"{len(assignment)} von {len(people)} Personen bekommen eine Aufgabe.",
+        )
     )
 
     value, flow = max_supply(data.SUPPLY_ROUTES, "Kirschtal", "Heckenrosental")
     supply = Graph.from_edges(data.SUPPLY_ROUTES, directed=True)
-    draw(
-        supply,
-        title=f"Nachschub: maximal {value} Säcke pro Nacht (Fluss/Kapazität)",
-        layout=data.POSITIONS,
-        edge_labels={(u, v): f"{flow[(u, v)]}/{c}" for u, v, c in supply.edges()},
-        highlight_edges=[edge for edge, amount in flow.items() if amount > 0],
+    flow_flags = {}
+    for (u, v), amount in flow.items():
+        if amount > 0:
+            flow_flags[(u, v)] = ["saturated" if amount == supply.weight(u, v) else "flow"]
+    pictures.append(
+        snapshot(
+            supply,
+            "Nachschub",
+            edge_labels={(u, v): f"{flow[(u, v)]}/{c}" for u, v, c in supply.edges()},
+            edge_flags=flow_flags,
+            vertex_flags={"Kirschtal": ["start"], "Heckenrosental": ["target"]},
+            message=f"Maximal {value} Säcke pro Nacht (Fluss/Kapazität).",
+            **on_map,
+        )
     )
+    show(*pictures, title="Das Netzwerk von Nangijala")
 
 
 if __name__ == "__main__":

@@ -155,7 +155,7 @@ python -m pytest exercises/01_graph_basics
 - Eine Zahl `k` ist ungerade, wenn `k % 2 == 1`.
 - Eine Matrix mit `n` Zeilen und `n` Spalten voller Nullen: `[[0] * n for _ in range(n)]`. (Achtung: `[[0] * n] * n` erzeugt n-mal *dieselbe* Zeile!)
 - Um den Index eines Knotens schnell zu finden, lohnt sich ein Wörterbuch `index = {v: i for i, v in enumerate(order)}`.
-- Mit `print_graph(graph)` aus `lib.visualization` können Sie jeden Graphen ansehen. Ist matplotlib installiert, zeichnet `draw(graph)` den Graphen in einem Fenster, z. B. `draw(graph, highlight_vertices=odd_degree_vertices(graph))`.
+- Mit `print_graph(graph)` aus `lib.visualization` können Sie jeden Graphen ansehen. `draw(graph)` zeigt ihn als Bild im Webbrowser, z. B. `draw(graph, "Ungerade Grade", highlight_vertices=odd_degree_vertices(graph))`.
 
 **Optionale Zusatzaufgaben**
 

@@ -211,3 +211,56 @@ def test_check_consistency_detects_unknown_neighbour() -> None:
 
 def test_repr() -> None:
     assert repr(Graph(directed=True)) == "Graph(directed, 0 vertices, 0 edges)"
+
+
+# ----------------------------------------------------------------------
+# Attributes
+# ----------------------------------------------------------------------
+def test_vertex_attributes() -> None:
+    graph = Graph()
+    graph.add_vertex("Katthult", pos=(0, 1))
+    assert graph.vertex_attributes("Katthult") == {"pos": (0, 1)}
+    graph.add_vertex("Katthult", label="Hof")  # merges, keeps pos
+    assert graph.vertex_attributes("Katthult") == {"pos": (0, 1), "label": "Hof"}
+    graph.vertex_attributes("Katthult")["pos"] = (2, 2)  # live dictionary
+    assert graph.vertex_attributes("Katthult")["pos"] == (2, 2)
+    graph.add_edge("Katthult", "Lönneberga")
+    assert graph.vertex_attributes("Lönneberga") == {}
+    with pytest.raises(KeyError):
+        graph.vertex_attributes("Stockholm")
+
+
+def test_edge_attributes_undirected_are_shared() -> None:
+    graph = Graph()
+    graph.add_edge("a", "b", 3, name="Brücke")
+    assert graph.edge_attributes("b", "a") == {"name": "Brücke"}
+    graph.edge_attributes("a", "b")["color"] = "rot"
+    assert graph.edge_attributes("b", "a")["color"] == "rot"
+    with pytest.raises(KeyError):
+        graph.edge_attributes("a", "c")
+
+
+def test_edge_attributes_directed_are_separate() -> None:
+    graph = Graph(directed=True)
+    graph.add_edge("a", "b", name="hin")
+    graph.add_edge("b", "a", name="zurück")
+    assert graph.edge_attributes("a", "b") == {"name": "hin"}
+    assert graph.edge_attributes("b", "a") == {"name": "zurück"}
+
+
+def test_attributes_are_copied_and_removed() -> None:
+    graph = Graph()
+    graph.add_vertex("x", pos=(1, 2))
+    graph.add_edge("x", "y", 2, kind="road")
+    copy = graph.copy()
+    assert copy.vertex_attributes("x") == {"pos": (1, 2)}
+    assert copy.edge_attributes("y", "x") == {"kind": "road"}
+    copy.vertex_attributes("x")["pos"] = (9, 9)
+    assert graph.vertex_attributes("x")["pos"] == (1, 2)
+    assert copy == graph  # attributes are not compared
+    graph.remove_edge("x", "y")
+    graph.check_consistency()
+    graph.remove_vertex("x")
+    graph.check_consistency()
+    with pytest.raises(KeyError):
+        graph.vertex_attributes("x")

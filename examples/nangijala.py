@@ -2,8 +2,8 @@
 
 Loads the data from ``exercises/10_final_project/nangijala_data.py``,
 builds the road network with the plain ``Graph`` class, prints some key
-figures, writes ``nangijala.dot`` for Graphviz and draws the map (if
-matplotlib is installed). No algorithm from the exercises is used here.
+figures, writes ``nangijala.dot`` for Graphviz and shows the map in the web
+browser. No algorithm from the exercises is used here.
 
 Run from the project root::
 
@@ -17,7 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # find ``lib``
 
 from lib.graph import Graph
 from lib.utils import EXERCISES_DIR, load_module_from_path
-from lib.visualization import can_draw, draw, print_graph, save_dot
+from lib.visualization import print_graph, save_dot, show, snapshot
 
 data = load_module_from_path(EXERCISES_DIR / "10_final_project" / "nangijala_data.py")
 
@@ -41,9 +41,16 @@ def main() -> None:
     path = save_dot(roads, Path.cwd() / "nangijala.dot", name="Nangijala")
     print(f"\nWrote {path} - render it with: dot -Tpng nangijala.dot -o nangijala.png")
 
-    if can_draw():  # windows open without blocking (needs matplotlib)
-        draw(roads, title="Nangijala: roads (minutes)", layout=data.POSITIONS)
-        draw(supply, title="Secret supply routes (sacks per night)", layout=data.POSITIONS)
+    # Positions can be stored in the graph itself as the vertex attribute "pos";
+    # the viewer then draws the graph like a map.
+    for place, position in data.POSITIONS.items():
+        if place in roads:
+            roads.add_vertex(place, pos=position)
+    show(
+        snapshot(roads, "Roads (minutes)"),
+        snapshot(supply, "Secret supply routes (sacks per night)", layout=data.POSITIONS),
+        title="Nangijala",
+    )
 
 
 if __name__ == "__main__":

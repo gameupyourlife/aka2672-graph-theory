@@ -366,3 +366,72 @@ def auto_layout(graph: Graph, seed: int = 0) -> Layout:
     if graph.num_edges() == n * (n - 1) // 2 or (not graph.directed and all(d == 2 for d in degrees)):
         return circular_layout(graph.vertices())
     return spring_layout(graph, seed=seed)
+
+
+def compute_layout(
+    graph: Graph,
+    layout: str | Mapping[Vertex, Position] = "auto",
+    *,
+    left: Iterable[Vertex] | None = None,
+    layers: Sequence[Sequence[Vertex]] | None = None,
+    shells: Sequence[Sequence[Vertex]] | None = None,
+    seed: int = 0,
+) -> Layout:
+    """Return vertex positions for ``graph`` - the single entry point used by the viewer.
+
+    Args:
+        graph: The graph.
+        layout: ``"auto"``, ``"spring"``, ``"circular"``, ``"shell"``,
+            ``"bipartite"``, ``"layered"``, ``"grid"`` or a dictionary
+            ``vertex -> (x, y)``. ``"auto"`` uses, in this order: the vertex
+            attribute ``"pos"`` (if every vertex has one), ``left`` /
+            ``layers`` / ``shells`` if given, otherwise :func:`auto_layout`.
+        left: Left side for ``"bipartite"``.
+        layers: Vertex lists for ``"layered"`` (one column per list).
+        shells: Vertex lists for ``"shell"`` (one circle per list).
+        seed: Seed of the spring layout.
+
+    Returns:
+        Positions scaled into ``[0, 1] x [0, 1]``.
+
+    Raises:
+        ValueError: If the layout is unknown, a needed argument is missing or
+            a dictionary misses vertices.
+    """
+    if isinstance(layout, Mapping):
+        missing = [v for v in graph.vertices() if v not in layout]
+        if missing:
+            raise ValueError(f"No position for vertices {missing}")
+        return normalize({v: tuple(layout[v]) for v in graph.vertices()})  # type: ignore[misc]
+    if layout == "auto":
+        attributes = [graph.vertex_attributes(v) for v in graph.vertices()]
+        if attributes and all("pos" in a for a in attributes):
+            return normalize({v: tuple(graph.vertex_attributes(v)["pos"]) for v in graph.vertices()})  # type: ignore[misc]
+        if left is not None:
+            layout = "bipartite"
+        elif layers is not None:
+            layout = "layered"
+        elif shells is not None:
+            layout = "shell"
+        else:
+            return auto_layout(graph, seed=seed)
+    if layout == "spring":
+        return spring_layout(graph, seed=seed)
+    if layout == "circular":
+        return circular_layout(graph.vertices())
+    if layout == "grid":
+        return grid_layout(graph)
+    if layout == "bipartite":
+        if left is None:
+            raise ValueError("layout='bipartite' needs the argument left=...")
+        return bipartite_layout(graph, left)
+    if layout in ("layered", "shell"):
+        groups = layers if layout == "layered" else shells
+        if groups is None:
+            name = "layers" if layout == "layered" else "shells"
+            raise ValueError(f"layout={layout!r} needs the argument {name}=...")
+        placed = {v for group in groups for v in group}
+        rest = [v for v in graph.vertices() if v not in placed]
+        all_groups = [[v for v in group if v in graph] for group in groups] + ([rest] if rest else [])
+        return layered_layout(all_groups) if layout == "layered" else shell_layout(all_groups)
+    raise ValueError(f"Unknown layout {layout!r}")
