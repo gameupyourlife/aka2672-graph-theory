@@ -28,18 +28,18 @@ Die Tests für die Pflichtfunktionen schlagen fehl, solange dort `NotImplemented
 
 ## Übungen
 
-| Einheit | Arbeitsaufträge |
-|---|---|
-| 1 | [Graphen modellieren](exercises/01_graph_basics/README.md) |
-| 2 | [Breiten- und Tiefensuche](exercises/02_bfs_dfs/README.md) |
-| 3 | [Spannbäume und Kruskal](exercises/03_spanning_trees/README.md) |
-| 4 | [Kürzeste Wege](exercises/04_shortest_paths/README.md) |
-| 5 | [Euler- und Hamiltonprobleme](exercises/05_euler_hamilton/README.md) |
-| 6 | [Graphfärbung](exercises/06_graph_coloring/README.md) |
-| 7 | [Bipartites Matching](exercises/07_matching/README.md) |
-| 8 | [Maximale Flüsse](exercises/08_max_flow/README.md) |
-| 9 | [Planarität und Komplexität](exercises/09_planarity_complexity/README.md) |
-| 10 | [Abschlussprojekt Nangijala](exercises/10_final_project/README.md) |
+| Einheit | Arbeitsaufträge | Theorie |
+|---|---|---|
+| 1 | [Graphen modellieren](exercises/01_graph_basics/README.md) | [Einführung](exercises/01_graph_basics/THEORIE.md) |
+| 2 | [Breiten- und Tiefensuche](exercises/02_bfs_dfs/README.md) | [Einführung](exercises/02_bfs_dfs/THEORIE.md) |
+| 3 | [Spannbäume und Kruskal](exercises/03_spanning_trees/README.md) | [Einführung](exercises/03_spanning_trees/THEORIE.md) |
+| 4 | [Kürzeste Wege](exercises/04_shortest_paths/README.md) | [Einführung](exercises/04_shortest_paths/THEORIE.md) |
+| 5 | [Euler- und Hamiltonprobleme](exercises/05_euler_hamilton/README.md) | [Einführung](exercises/05_euler_hamilton/THEORIE.md) |
+| 6 | [Graphfärbung](exercises/06_graph_coloring/README.md) | [Einführung](exercises/06_graph_coloring/THEORIE.md) |
+| 7 | [Bipartites Matching](exercises/07_matching/README.md) | [Einführung](exercises/07_matching/THEORIE.md) |
+| 8 | [Maximale Flüsse](exercises/08_max_flow/README.md) | [Einführung](exercises/08_max_flow/THEORIE.md) |
+| 9 | [Planarität und Komplexität](exercises/09_planarity_complexity/README.md) | [Einführung](exercises/09_planarity_complexity/THEORIE.md) |
+| 10 | [Abschlussprojekt Nangijala](exercises/10_final_project/README.md) | [Einführung](exercises/10_final_project/THEORIE.md) |
 
 Jede Einheit enthält `task.py` zum Bearbeiten, `test_task.py` zum Prüfen und eine README mit dem Arbeitsauftrag. Die Einheiten 1 bis 9 kannst du unabhängig bearbeiten. Im Abschlussprojekt greifst du auf Funktionen aus früheren Einheiten zurück.
 
