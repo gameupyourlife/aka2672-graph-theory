@@ -24,6 +24,26 @@ def test_empty_graph() -> None:
     assert not graph.directed
 
 
+def test_constructor_accepts_vertices_and_edges() -> None:
+    graph = Graph(
+        vertices=iter(["isolated", "A"]),
+        edges=iter([("A", "B"), Edge("B", "C", 5)]),
+        directed=False,
+    )
+
+    assert graph.vertices() == ["isolated", "A", "B", "C"]
+    assert graph.edges() == [Edge("A", "B"), Edge("B", "C", 5)]
+    assert graph.degree("isolated") == 0
+    assert graph.weight("C", "B") == 5
+
+
+def test_constructor_keeps_directed_as_a_positional_argument() -> None:
+    graph = Graph(True, edges=[("A", "B")])
+
+    assert graph.has_edge("A", "B")
+    assert not graph.has_edge("B", "A")
+
+
 def test_example_from_documentation() -> None:
     graph = Graph(directed=False)
     graph.add_edge("Bullerby", "Lonneberga")

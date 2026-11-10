@@ -2,6 +2,8 @@
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 
+Um die Test auszuführen: `python -m pytest exercises/01_graph_basics`
+
 ## Auftrag
 
 1. Baue mit `build_bullerby_graph` das ungerichtete Wegenetz und mit `build_letter_graph` das gerichtete Briefnetz. Die Kanten stehen in den Docstrings.

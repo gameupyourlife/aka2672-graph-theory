@@ -75,12 +75,22 @@ class Graph:
         2
     """
 
-    def __init__(self, directed: bool = False) -> None:
-        """Create an empty graph.
+    def __init__(
+        self,
+        directed: bool = False,
+        *,
+        vertices: Iterable[Vertex] | None = None,
+        edges: Iterable[tuple[Vertex, Vertex] | tuple[Vertex, Vertex, float]] | None = None,
+    ) -> None:
+        """Create a graph with optional initial vertices and edges.
 
         Args:
             directed: ``True`` for a directed graph (edges have a direction),
                 ``False`` (default) for an undirected graph.
+            vertices: Vertices to insert before adding edges, including any
+                isolated vertices.
+            edges: Pairs ``(u, v)`` or triples ``(u, v, weight)``. Missing
+                end vertices are added automatically.
         """
         self._directed = directed
         # _succ[u][v] = weight of the edge u -> v (or u -- v).
@@ -95,6 +105,10 @@ class Graph:
         # (u, v) and (v, u).
         self._vertex_attrs: dict[Vertex, dict[str, Any]] = {}
         self._edge_attrs: dict[tuple[Vertex, Vertex], dict[str, Any]] = {}
+        if vertices is not None:
+            self.add_vertices(vertices)
+        if edges is not None:
+            self.add_edges(edges)
 
     # ------------------------------------------------------------------
     # Construction

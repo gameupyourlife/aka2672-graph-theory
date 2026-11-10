@@ -40,10 +40,11 @@ for u, v, weight in graph.edges():       # jede ungerichtete Kante genau einmal
     print(u, v, weight)
 ```
 
-Ein Graph aus einer Kantenliste:
+Du kannst Knoten und Kanten direkt beim Erzeugen angeben. Der Knoten `Z`
+bleibt isoliert. Fehlende Endknoten ergänzt der Konstruktor automatisch.
 
 ```python
-graph = Graph.from_edges([("A", "B", 3), ("B", "C"), ("C", "A", 2)])
+graph = Graph(vertices=["Z", "A"], edges=[("A", "B", 3), ("B", "C")], directed=False)
 ```
 
 ## Konventionen
@@ -120,7 +121,7 @@ Ein benanntes Tupel; man kann es auspacken (`for u, v, w in graph.edges()`) oder
 
 | Methode | Beschreibung |
 |---|---|
-| `Graph(directed=False)` | Leerer Graph. |
+| `Graph(directed=False, *, vertices=None, edges=None)` | Erzeugt einen Graphen. Fügt zuerst die angegebenen Knoten und dann die Kanten als Paare `(u, v)` oder Tripel `(u, v, w)` ein. Ohne Knoten und Kanten entsteht ein leerer Graph. |
 | `Graph.from_edges(edges, directed=False, vertices=())` | Graph aus Paaren `(u, v)` oder Tripeln `(u, v, w)`; `vertices` fügt zusätzliche (z. B. isolierte) Knoten hinzu. Ein Eintrag mit anderer Länge löst `ValueError` aus. |
 | `directed` | Eigenschaft: `True` für gerichtete Graphen (nur lesbar). |
 
