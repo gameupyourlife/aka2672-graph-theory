@@ -1,9 +1,9 @@
-"""Einheit 3 – Spannbäume und Kruskal.
+"""Unit 3 - Spanning trees and Kruskal's algorithm.
 
-Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
-``raise NotImplementedError(...)`` durch deinen Code.
+Follow the TODOs in each function. Replace each
+``raise NotImplementedError(...)`` with your implementation.
 
-Starte die Tests im Projektordner mit diesem Befehl.
+Run the tests from the project root.
 
     python -m pytest exercises/03_spanning_trees
 """

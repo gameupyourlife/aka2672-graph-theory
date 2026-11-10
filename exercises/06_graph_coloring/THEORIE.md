@@ -1,4 +1,4 @@
-# Theorie zu Einheit 6 – Graphfärbung
+# Theorie zu Einheit 6 - Graphfärbung
 
 ## 1. Überblick
 
@@ -21,7 +21,7 @@ Die **chromatische Zahl** $\chi(G)$ ist die kleinste Zahl von Farben, mit der si
 
 Greedy färbt die Knoten nacheinander. Jeder Knoten bekommt die kleinste Farbe, die bei seinen bereits gefärbten Nachbarn noch frei ist. Hat er $d$ bereits gefärbte Nachbarn, können diese höchstens $d$ Farben blockieren. Unter den Zahlen 0 bis $d$ bleibt also eine frei. Mit maximalem Knotengrad $\Delta$ ergibt sich die Schranke von $\Delta+1$ Farben.
 
-Die Reihenfolge legt fest, welche Farben schon blockiert sind. Betrachte den Pfad `A – B – C – D – E`. In Pfadreihenfolge wechselt Greedy zwischen 0 und 1. In der Reihenfolge `A, D, B, C, E` bekommen `A` und `D` zuerst beide 0. `B` bekommt 1, weil `A` schon gefärbt ist. Für `C` sind dann beide Farben blockiert, also bekommt er Farbe 2.
+Die Reihenfolge legt fest, welche Farben schon blockiert sind. Betrachte den Pfad `A - B - C - D - E`. In Pfadreihenfolge wechselt Greedy zwischen 0 und 1. In der Reihenfolge `A, D, B, C, E` bekommen `A` und `D` zuerst beide 0. `B` bekommt 1, weil `A` schon gefärbt ist. Für `C` sind dann beide Farben blockiert, also bekommt er Farbe 2.
 
 Bei Welsh-Powell kommen Knoten mit hohem Grad zuerst. Für die zugehörige Schranke kombinierst du zwei Beobachtungen. Der $i$-te Knoten hat höchstens $\deg(v_i)$ Nachbarn und höchstens $i-1$ bereits gefärbte Knoten vor sich. Für eine optimale Reihenfolge ist eine andere Idee hilfreich. Wenn du eine optimale Färbung schon kennst, kannst du ihre Farbklassen nacheinander abarbeiten.
 

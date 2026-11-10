@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "graphentheorie-kurs"
 version = "1.0.0"
-description = "Python-Übungen für einen 30-stündigen Graphentheorie-Kurs (Aka Kunterbunt)"
+description = "Python exercises for a 30-hour graph theory course (Aka Kunterbunt)"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = []

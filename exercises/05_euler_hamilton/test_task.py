@@ -37,7 +37,7 @@ impl = load_implementation(__file__)
 # Example graphs
 # ----------------------------------------------------------------------
 def nikolaus() -> Graph:
-    """'Das Haus vom Nikolaus': odd vertices 1 and 2 (the bottom corners)."""
+    """The House of St. Nicholas has odd vertices 1 and 2 (the bottom corners)."""
     return Graph.from_edges([(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)])
 
 

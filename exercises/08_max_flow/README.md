@@ -1,4 +1,4 @@
-# Einheit 8 – Maximale Flüsse
+# Einheit 8 - Maximale Flüsse
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

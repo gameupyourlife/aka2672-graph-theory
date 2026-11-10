@@ -1,4 +1,4 @@
-# Theorie zu Einheit 5 – Euler- und Hamiltonprobleme
+# Theorie zu Einheit 5 - Euler- und Hamiltonprobleme
 
 ## 1. Überblick
 
@@ -18,7 +18,7 @@ Ein Kantenzug darf einen Knoten mehrfach besuchen. Ein Eulerzug benutzt jede Kan
 
 An jedem inneren Besuch eines Knotens gehören eine Ankunft und ein Abgang zusammen. Bei einem geschlossenen Zug haben daher alle Knoten geraden Grad. Bei einem offenen Zug bleiben genau am Start und am Ziel je eine Kante ohne Gegenstück. Umgekehrt reichen der beschriebene Zusammenhang und genau null oder zwei ungerade Grade für einen Eulerzug aus. Ein Eulerkreis braucht null ungerade Grade. Ein Graph ohne Kanten hat in dieser Übung einen trivialen Eulerzug und Eulerkreis.
 
-Ein Dreieck `A – B – C – A` hat einen Eulerkreis. Hängst du die Kante `A – D` an, werden nur die Grade von `A` und `D` ungerade. Nun gibt es den offenen Eulerzug `D – A – B – C – A`.
+Ein Dreieck `A - B - C - A` hat einen Eulerkreis. Hängst du die Kante `A - D` an, werden nur die Grade von `A` und `D` ungerade. Nun gibt es den offenen Eulerzug `D - A - B - C - A`.
 
 Der Satz lässt sich konstruktiv verstehen. Bei geraden Graden kannst du entlang noch unbenutzter Kanten erst am Start stecken bleiben. Solange Kanten übrig sind, kannst du an einem geeigneten Knoten des bisherigen geschlossenen Zugs einen weiteren geschlossenen Zug beginnen und ihn einfügen. Dieses Verfahren heißt **Hierholzer**. Bei zwei ungeraden Knoten kannst du für den Existenzbeweis eine zusätzliche Kante zwischen ihnen denken und nachher aus dem Kreis herausnehmen. In der Suche für einen offenen Eulerzug startest du an einem der beiden ungeraden Knoten.
 

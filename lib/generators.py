@@ -120,7 +120,7 @@ def petersen_graph() -> Graph:
 def random_graph(
     n: int, p: float, seed: int | None = None, directed: bool = False
 ) -> Graph:
-    """Return a random graph ``G(n, p)`` (Erdős–Rényi model).
+    """Return a random graph ``G(n, p)`` (Erdős-Rényi model).
 
     Every possible edge is inserted independently with probability ``p``.
 

@@ -37,7 +37,7 @@ KOENIGSBERG_BRIDGES = [
     ("b7", "Süd", "Ost"),
 ]
 
-# "Das ist das Haus vom Ni-ko-laus": 5 corners, 8 lines.
+# The House of St. Nicholas has 5 corners and 8 lines.
 NIKOLAUS_EDGES = [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)]
 
 
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     print()
 
     nikolaus = Graph.from_edges(NIKOLAUS_EDGES)
-    print("Haus vom Nikolaus")
+    print("House of St. Nicholas")
     print("  Euler circuit:", has_euler_circuit(nikolaus))
     print("  Euler trail:  ", format_path(find_euler_trail(nikolaus), directed=False))
     print()
@@ -287,7 +287,7 @@ if __name__ == "__main__":
         ),
         snapshot(
             nikolaus,
-            "Das ist das Haus vom Ni-ko-laus",
+            "House of St. Nicholas",
             layout=house,
             highlight_edges=trail_edges,
             edge_labels={edge: i + 1 for i, edge in enumerate(trail_edges)},

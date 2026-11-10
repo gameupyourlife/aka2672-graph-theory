@@ -1,14 +1,14 @@
-"""Einheit 10 – Das Netzwerk von Nangijala.
+"""Unit 10 - The Nangijala network.
 
-Bearbeite mit deiner Gruppe Modul A und mindestens zwei der Module B bis F.
-Modul G ist optional. Nutze die vorbereiteten Daten und die Funktionen aus
-den früheren Einheiten. Stelle eure Ergebnisse in zehn Minuten vor und
-begründe für jedes Modul, warum der verwendete Algorithmus anwendbar ist.
+Work with your group on module A and at least two of modules B through F.
+Module G is optional. Use the supplied data and the functions from earlier
+units. Present your results in ten minutes and explain why the algorithm
+you chose applies to each module.
 
-Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
-``raise NotImplementedError(...)`` durch deinen Code.
+Follow the TODOs in each function. Replace each
+``raise NotImplementedError(...)`` with your implementation.
 
-Starte die Tests im Projektordner mit diesem Befehl.
+Run the tests from the project root.
 
     python -m pytest exercises/10_final_project
 """
@@ -23,8 +23,8 @@ from lib.graph import Edge, Graph, Vertex
 from lib.utils import format_path, load_exercise, load_module_from_path
 from lib.visualization import print_graph
 
-# Verwende mit "task" deine Lösungen aus den früheren Einheiten.
-# Mit "demo_solution" kannst du auf die Musterlösungen umschalten, sofern sie vorliegen.
+# Use "task" to load your solutions from earlier units.
+# Use "demo_solution" to load the reference solutions if they are available.
 PREVIOUS = "task"
 
 bfs_dfs = load_exercise("02_bfs_dfs", PREVIOUS)  # bfs, dfs, connected_components, ...
@@ -46,8 +46,8 @@ def build_network(roads: Iterable[tuple[str, str, float]]) -> Graph:
     Args:
         roads: Triples ``(place, place, minutes)`` such as ``data.ROADS``.
     """
-    # TODO: Füge pro Straße eine ungerichtete Kante mit der Reisezeit als Gewicht ein.
-    # Zeichne anschließend das Netz aus data.ROADS und prüfe das Handschlaglemma.
+    # TODO: Add one undirected edge per road, weighted by travel time.
+    # Then draw the network from data.ROADS and check the handshake lemma.
     raise NotImplementedError("TODO: build_network")
 
 
@@ -74,8 +74,8 @@ def reachable_places(graph: Graph, start: Vertex, blocked: Iterable[Vertex] = ()
         ValueError: If ``start`` itself is blocked.
     """
     # TODO: use without_places() and a search from unit 2 (bfs_dfs.dfs or bfs_dfs.bfs).
-    # Prüfe am Beispielnetz die Erreichbarkeit vom Reiterhof aus, wenn
-    # Bärenpass und Adlerhorst gesperrt sind.
+    # In the example network, check which places are reachable from
+    # Reiterhof when Bärenpass and Adlerhorst are closed.
     raise NotImplementedError("TODO: reachable_places")
 
 
@@ -119,8 +119,9 @@ def fastest_route(
         ValueError: If ``start`` or ``target`` is blocked.
     """
     # TODO: use without_places() and shortest_paths.dijkstra / reconstruct_path.
-    # Suche im Beispielnetz den schnellsten Weg vom Reiterhof zu Tengils Burg
-    # und zum Marktplatz bei gesperrtem Bärenpass und Waldsee.
+    # In the example network, find the fastest route from Reiterhof to Tengils
+    # Burg. Then find the fastest route from Reiterhof to Marktplatz with
+    # Bärenpass and Waldsee closed.
     raise NotImplementedError("TODO: fastest_route")
 
 
@@ -175,7 +176,8 @@ def max_supply(
         Same errors as ``max_flow.edmonds_karp``.
     """
     # TODO (optional): build a directed graph and use max_flow.edmonds_karp.
-    # Prüfe data.SUPPLY_ROUTES mit "Kirschtal" als Quelle und "Heckenrosental" als Senke.
+    # Test with data.SUPPLY_ROUTES, "Kirschtal" as the source, and
+    # "Heckenrosental" as the sink.
     raise NotImplementedError("TODO (optional): max_supply")
 
 

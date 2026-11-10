@@ -63,7 +63,7 @@ python -m pytest --impl=demo exercises/02_bfs_dfs  # testet demo_solution.py
 | `load_exercise(unit, module="demo_solution")` | eine andere Übung importieren, z. B. `load_exercise("02_bfs_dfs", "task")`. Ordnernamen mit Ziffern lassen sich nicht mit `import` laden. |
 | `load_module_from_path(path, module_name=None)` | beliebige `.py`-Datei als Modul laden (zwischengespeichert in `sys.modules`) |
 | `path_weight(graph, path)` | Summe der Kantengewichte entlang eines Weges (ein Knoten: 0) |
-| `format_path(path, directed=True)` | `"A -> B -> C"`; `None` wird `"(kein Weg)"` |
+| `format_path(path, directed=True)` | `"A -> B -> C"`; `None` wird `"(no path)"` |
 | `measure_time(function, *args, repeat=3)` | beste Laufzeit in Sekunden aus `repeat` Aufrufen |
 | `PROJECT_ROOT`, `EXERCISES_DIR` | Pfade des Projekts |
 

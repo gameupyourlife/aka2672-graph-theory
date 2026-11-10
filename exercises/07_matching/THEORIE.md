@@ -1,4 +1,4 @@
-# Theorie zu Einheit 7 – Bipartites Matching
+# Theorie zu Einheit 7 - Bipartites Matching
 
 ## 1. Überblick
 
@@ -16,7 +16,7 @@
 
 Im bipartiten Graphen verbindet jede Kante einen linken mit einem rechten Knoten. Die Seiten sind in der Übung gegeben. Ein Matching ist eine Auswahl von Kanten, bei der kein Knoten mehr als eine ausgewählte Kante berührt. Für Personen links und Aufgaben rechts bedeutet das höchstens eine Aufgabe pro Person und höchstens eine Person pro Aufgabe. Ein Wörterbuch von links nach rechts speichert die ausgewählten Paare. Die rechten Werte müssen dabei ebenfalls eindeutig sein.
 
-Ein inklusionsmaximales Matching lässt keine einzelne zusätzliche Kante zu. Ein größtes Matching hat unter allen Matchings die meisten Kanten. Stell dir zwei Personen vor. Ada kann Garten oder Küche übernehmen, Ben nur Garten. Die Zuordnung Ada–Garten lässt sich nicht direkt erweitern. Wenn Ada in die Küche wechselt, können beide eine Aufgabe bekommen.
+Ein inklusionsmaximales Matching lässt keine einzelne zusätzliche Kante zu. Ein größtes Matching hat unter allen Matchings die meisten Kanten. Stell dir zwei Personen vor. Ada kann Garten oder Küche übernehmen, Ben nur Garten. Die Zuordnung Ada-Garten lässt sich nicht direkt erweitern. Wenn Ada in die Küche wechselt, können beide eine Aufgabe bekommen.
 
 ### Alternieren und vergrößern
 

@@ -1,4 +1,4 @@
-# Theorie zu Einheit 2 – Breiten- und Tiefensuche
+# Theorie zu Einheit 2 - Breiten- und Tiefensuche
 
 ## 1. Überblick
 
@@ -20,7 +20,7 @@ Auf einem Weg sind je zwei aufeinanderfolgende Knoten durch eine Kante verbunden
 
 Eine Warteschlange entnimmt das älteste Element zuerst. Entdeckst du einen Nachbarn beim Bearbeiten eines Knotens mit Abstand $d$, so erhält der Nachbar Abstand $d+1$. Die Warteschlange hält diese Schichten in der richtigen Reihenfolge. Alle Knoten mit kleinerem Abstand werden zuerst bearbeitet, daher liefert die erste Entdeckung bereits einen kürzesten Weg.
 
-Speichere bei der Entdeckung auch den Vorgänger, also den Knoten, über den du den Nachbarn erreicht hast. Im Graphen mit `A – B`, `A – C` und `B – D` sind die Schichten ab `A` etwa `[A]`, `[B, C]` und `[D]`. Die Vorgänger führen von `D` über `B` zurück zu `A`. Umgekehrt gelesen ist das der Weg vom Start zum Ziel. Markiere einen Knoten schon beim Einreihen als entdeckt, damit ihn verschiedene Nachbarn nicht mehrfach einreihen.
+Speichere bei der Entdeckung auch den Vorgänger, also den Knoten, über den du den Nachbarn erreicht hast. Im Graphen mit `A - B`, `A - C` und `B - D` sind die Schichten ab `A` etwa `[A]`, `[B, C]` und `[D]`. Die Vorgänger führen von `D` über `B` zurück zu `A`. Umgekehrt gelesen ist das der Weg vom Start zum Ziel. Markiere einen Knoten schon beim Einreihen als entdeckt, damit ihn verschiedene Nachbarn nicht mehrfach einreihen.
 
 ### Tiefensuche und Stapel
 

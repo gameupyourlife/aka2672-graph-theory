@@ -1,4 +1,4 @@
-# Theorie zu Einheit 4 – Kürzeste Wege
+# Theorie zu Einheit 4 - Kürzeste Wege
 
 ## 1. Überblick
 

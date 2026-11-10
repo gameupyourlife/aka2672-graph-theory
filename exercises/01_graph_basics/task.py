@@ -1,14 +1,14 @@
-"""Einheit 1 – Graphen modellieren.
+"""Unit 1 - Modelling graphs.
 
-Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
-``raise NotImplementedError(...)`` durch deinen Code.
+Follow the TODOs in each function. Replace each
+``raise NotImplementedError(...)`` with your implementation.
 
-Verwende `Graph` aus `lib.graph`. `Graph(directed=True)` legt einen
-gerichteten Graphen an. `add_edge(u, v)` ergänzt fehlende Knoten,
-`vertices()` liefert die Knoten und `edges()` die Kanten mit Gewicht.
-Berücksichtige auch leere Graphen.
+Use ``Graph`` from ``lib.graph``. ``Graph(directed=True)`` creates a directed
+graph. ``add_edge(u, v)`` adds any missing vertices, ``vertices()`` returns
+the vertices, and ``edges()`` returns the edges with their weights.
+Handle empty graphs too.
 
-Starte die Tests im Projektordner mit diesem Befehl.
+Run the tests from the project root.
 
     python -m pytest exercises/01_graph_basics
 """
@@ -23,28 +23,28 @@ from lib.visualization import print_graph
 
 
 def build_bullerby_graph() -> Graph:
-    """Erzeuge einen ungerichteten Graphen mit einer Kante pro Fußweg.
+    """Build an undirected graph with one edge per footpath.
 
-    Verwende die Ortsnamen genau wie angegeben. Jede Kante hat Gewicht 1.
+    Use the place names exactly as shown. Each edge has weight 1.
 
-    Nordhof – Mittelhof
-    Mittelhof – Südhof
-    Nordhof – Südhof
-    Mittelhof – Schule
-    Schule – Kaufladen
-    Kaufladen – Badestelle
-    Südhof – Badestelle
-    Badestelle – Erdbeerstelle
-    Nordhof – Erdbeerstelle
+    Nordhof - Mittelhof
+    Mittelhof - Südhof
+    Nordhof - Südhof
+    Mittelhof - Schule
+    Schule - Kaufladen
+    Kaufladen - Badestelle
+    Südhof - Badestelle
+    Badestelle - Erdbeerstelle
+    Nordhof - Erdbeerstelle
     """
-    # TODO: Füge die Fußwege als ungerichtete Kanten ein.
+    # TODO: Add an undirected edge for each footpath.
     raise NotImplementedError("TODO: build_bullerby_graph")
 
 
 def build_letter_graph() -> Graph:
-    """Erzeuge einen gerichteten Graphen mit einer Kante pro Briefverbindung.
+    """Build a directed graph with one edge per sender-recipient pair.
 
-    Die Pfeile zeigen vom Absender zum Empfänger.
+    Each arrow points from the sender to the recipient.
 
     Lisa -> Britta
     Lisa -> Inga
@@ -55,7 +55,7 @@ def build_letter_graph() -> Graph:
     Ole -> Bosse
     Lasse -> Lisa
     """
-    # TODO: Füge die Briefverbindungen als gerichtete Kanten ein.
+    # TODO: Add the directed edges listed above.
     raise NotImplementedError("TODO: build_letter_graph")
 
 
@@ -80,7 +80,7 @@ def degree_sequence(graph: Graph) -> list[int]:
 
 def odd_degree_vertices(graph: Graph) -> list[Vertex]:
     """Return all vertices with odd degree (in the order of ``graph.vertices()``)."""
-    # TODO: Filtere graph.vertices() mit den Werten aus degrees().
+    # TODO: Filter graph.vertices() using the values from degrees().
     raise NotImplementedError("TODO: odd_degree_vertices")
 
 

@@ -1,13 +1,13 @@
-"""Einheit 5 – Euler- und Hamiltonprobleme.
+"""Unit 5 - Euler and Hamilton problems.
 
-Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
-``raise NotImplementedError(...)`` durch deinen Code.
+Follow the TODOs in each function. Replace each
+``raise NotImplementedError(...)`` with your implementation.
 
-Der Beispielblock am Dateiende ruft auch optionale Funktionen auf.
-Teste die Pflichtaufgaben einzeln mit pytest, solange diese TODOs offen sind.
-Prüfe die Existenz von Eulerkreisen und Eulerzügen in O(|V| + |E|).
+The example at the end of this file also calls optional functions.
+Use pytest to check the required functions while those TODOs are unfinished.
+Check for Euler circuits and trails in O(|V| + |E|) time.
 
-Starte die Tests im Projektordner mit diesem Befehl.
+Run the tests from the project root.
 
     python -m pytest exercises/05_euler_hamilton
 """
@@ -35,7 +35,7 @@ KOENIGSBERG_BRIDGES = [
     ("b7", "Süd", "Ost"),
 ]
 
-# "Das ist das Haus vom Ni-ko-laus": 5 corners, 8 lines.
+# The House of St. Nicholas has 5 corners and 8 lines.
 NIKOLAUS_EDGES = [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)]
 
 

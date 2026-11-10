@@ -1,4 +1,4 @@
-# Einheit 3 – Spannbäume und Kruskal
+# Einheit 3 - Spannbäume und Kruskal
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

@@ -1,4 +1,4 @@
-# Einheit 9 – Planarität und Komplexität
+# Einheit 9 - Planarität und Komplexität
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 
@@ -6,7 +6,7 @@ Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 
 1. Implementiere `faces_by_euler_formula`, `max_planar_edges`, `has_triangle` und `is_certainly_nonplanar`.
 2. Implementiere `hamiltonian_cycle_bruteforce` und `number_of_hamiltonian_cycles_complete`. Prüfe, wie viele Permutationen die Suche beim Petersen-Graphen untersucht.
-3. Ersetze die Platzhalter in `COMPLEXITY_CLASSES` durch die passenden Labels.
+3. Ersetze die Platzhalter in `COMPLEXITY_CLASSES` durch die passenden Bezeichnungen `P`, `NP-complete` oder `NP-hard`.
 
 ## Auf Papier
 

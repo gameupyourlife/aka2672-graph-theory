@@ -1,4 +1,4 @@
-# Einheit 5 – Euler- und Hamiltonprobleme
+# Einheit 5 - Euler- und Hamiltonprobleme
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

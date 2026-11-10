@@ -1,4 +1,4 @@
-# Einheit 4 – Kürzeste Wege
+# Einheit 4 - Kürzeste Wege
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

@@ -259,10 +259,10 @@ trace.flag("Bosse", "infiziert")
 | Eigenschaft | Wirkung bei Knoten | Wirkung bei Kanten |
 |---|---|---|
 | `description` | Text in der Legende | Text in der Legende |
-| `fill` | Füllfarbe | – |
+| `fill` | Füllfarbe | - |
 | `color` | Rahmenfarbe | Linienfarbe |
 | `width` | Rahmenbreite | Linienbreite |
-| `text` | Schriftfarbe des Namens | – |
+| `text` | Schriftfarbe des Namens | - |
 | `halo` | Leuchten um den Knoten | Leuchten um die Kante |
 | `dash` | gestrichelter Rahmen | gestrichelte Linie |
 | `fade` | blass darstellen | blass darstellen |

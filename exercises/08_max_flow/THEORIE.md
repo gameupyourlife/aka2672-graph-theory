@@ -1,4 +1,4 @@
-# Theorie zu Einheit 8 – Maximale Flüsse
+# Theorie zu Einheit 8 - Maximale Flüsse
 
 ## 1. Überblick
 

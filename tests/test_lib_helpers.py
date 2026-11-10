@@ -169,7 +169,7 @@ def test_path_weight_and_format() -> None:
     with pytest.raises(KeyError):
         utils.path_weight(graph, ["A", "C"])
     assert utils.format_path(["A", "B"]) == "A -> B"
-    assert utils.format_path(None) == "(kein Weg)"
+    assert utils.format_path(None) == "(no path)"
 
 
 def test_measure_time() -> None:

@@ -1,12 +1,12 @@
-"""Einheit 6 – Graphfärbung.
+"""Unit 6 - Graph colouring.
 
-Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
-``raise NotImplementedError(...)`` durch deinen Code.
+Follow the TODOs in each function. Replace each
+``raise NotImplementedError(...)`` with your implementation.
 
-Der Beispielblock am Dateiende ruft auch optionale Funktionen auf.
-Teste die Pflichtaufgaben einzeln mit pytest, solange diese TODOs offen sind.
+The example at the end of this file also calls optional functions.
+Use pytest to check the required functions while those TODOs are unfinished.
 
-Starte die Tests im Projektordner mit diesem Befehl.
+Run the tests from the project root.
 
     python -m pytest exercises/06_graph_coloring
 """

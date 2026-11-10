@@ -1,4 +1,4 @@
-# Einheit 1 – Graphen modellieren
+# Einheit 1 - Graphen modellieren
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

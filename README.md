@@ -1,4 +1,4 @@
-# Graphentheorie-Kurs – Python-Übungen für die Aka Kunterbunt
+# Graphentheorie-Kurs - Python-Übungen für die Aka Kunterbunt
 
 Hier findest du die Programmierübungen zum Graphentheorie-Kurs. Du brauchst Python 3.11 oder neuer. Die mitgelieferte Bibliothek `lib` stellt die Graphklasse und Hilfsfunktionen bereit.
 

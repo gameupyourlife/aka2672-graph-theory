@@ -1,11 +1,11 @@
-"""Einheit 9 – Planarität und Komplexität.
+"""Unit 9 - Planarity and complexity.
 
-Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
-``raise NotImplementedError(...)`` durch deinen Code.
+Follow the TODOs in each function. Replace each
+``raise NotImplementedError(...)`` with your implementation.
 
-Ordne außerdem jedem Problem in `COMPLEXITY_CLASSES` ein Label zu.
+Assign a label to each problem in ``COMPLEXITY_CLASSES``.
 
-Starte die Tests im Projektordner mit diesem Befehl.
+Run the tests from the project root.
 
     python -m pytest exercises/09_planarity_complexity
 """
@@ -143,24 +143,23 @@ def number_of_hamiltonian_cycles_complete(n: int) -> int:
     raise NotImplementedError("TODO: number_of_hamiltonian_cycles_complete")
 
 
-# Ersetze jedes "TODO" durch "P", "NP-vollständig" oder "NP-schwer".
-# Lass die Schlüssel unverändert und wähle unter der Annahme P != NP
-# das präziseste Label. Verwende "P" auch für Optimierungsprobleme,
-# die du in Polynomialzeit lösen kannst, und "NP-schwer" für NP-schwere
-# Probleme, die keine Entscheidungsprobleme in NP sind.
+# Replace each "TODO" with "P", "NP-complete", or "NP-hard".
+# Keep the keys unchanged and use the most specific label, assuming P != NP.
+# Use "P" for optimisation problems solvable in polynomial time as well,
+# and "NP-hard" for NP-hard problems that are not decision problems in NP.
 COMPLEXITY_CLASSES: dict[str, str] = {
-    "Eulerkreis: Besitzt der Graph einen Eulerkreis?": "TODO",
-    "Hamiltonkreis: Besitzt der Graph einen Hamiltonkreis?": "TODO",
-    "Kürzester Weg zwischen zwei Knoten (nichtnegative Gewichte) finden": "TODO",
-    "Minimalen Spannbaum finden": "TODO",
-    "2-Färbbarkeit: Ist der Graph mit 2 Farben färbbar?": "TODO",
-    "3-Färbbarkeit: Ist der Graph mit 3 Farben färbbar?": "TODO",
-    "Maximales Matching in einem bipartiten Graphen finden": "TODO",
-    "Maximalen Fluss in einem Netzwerk finden": "TODO",
-    "Clique: Gibt es eine Clique mit k Knoten (k ist Teil der Eingabe)?": "TODO",
-    "Planarität: Ist der Graph planar?": "TODO",
-    "TSP-Entscheidung: Gibt es eine Rundreise mit Länge höchstens L?": "TODO",
-    "TSP-Optimierung: Kürzeste Rundreise finden": "TODO",
+    "Euler circuit: does the graph have an Euler circuit?": "TODO",
+    "Hamiltonian cycle: does the graph have a Hamiltonian cycle?": "TODO",
+    "Find a shortest path between two vertices (non-negative weights)": "TODO",
+    "Find a minimum spanning tree": "TODO",
+    "2-colourability: can the graph be coloured with 2 colours?": "TODO",
+    "3-colourability: can the graph be coloured with 3 colours?": "TODO",
+    "Find a maximum matching in a bipartite graph": "TODO",
+    "Find a maximum flow in a network": "TODO",
+    "Clique: is there a clique of size k (with k part of the input)?": "TODO",
+    "Planarity: is the graph planar?": "TODO",
+    "TSP decision: is there a tour of length at most L?": "TODO",
+    "TSP optimisation: find a shortest tour": "TODO",
 }
 
 

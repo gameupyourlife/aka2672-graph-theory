@@ -242,21 +242,21 @@ def number_of_hamiltonian_cycles_complete(n: int) -> int:
 
 # Convention: the most precise class known today, assuming P != NP.
 # "P" is also used for optimisation problems that can be solved in
-# polynomial time; "NP-schwer" for problems that are NP-hard but are not
+# polynomial time; "NP-hard" for problems that are NP-hard but are not
 # decision problems in NP (e.g. the optimisation version of TSP).
 COMPLEXITY_CLASSES: dict[str, str] = {
-    "Eulerkreis: Besitzt der Graph einen Eulerkreis?": "P",
-    "Hamiltonkreis: Besitzt der Graph einen Hamiltonkreis?": "NP-vollständig",
-    "Kürzester Weg zwischen zwei Knoten (nichtnegative Gewichte) finden": "P",
-    "Minimalen Spannbaum finden": "P",
-    "2-Färbbarkeit: Ist der Graph mit 2 Farben färbbar?": "P",
-    "3-Färbbarkeit: Ist der Graph mit 3 Farben färbbar?": "NP-vollständig",
-    "Maximales Matching in einem bipartiten Graphen finden": "P",
-    "Maximalen Fluss in einem Netzwerk finden": "P",
-    "Clique: Gibt es eine Clique mit k Knoten (k ist Teil der Eingabe)?": "NP-vollständig",
-    "Planarität: Ist der Graph planar?": "P",
-    "TSP-Entscheidung: Gibt es eine Rundreise mit Länge höchstens L?": "NP-vollständig",
-    "TSP-Optimierung: Kürzeste Rundreise finden": "NP-schwer",
+    "Euler circuit: does the graph have an Euler circuit?": "P",
+    "Hamiltonian cycle: does the graph have a Hamiltonian cycle?": "NP-complete",
+    "Find a shortest path between two vertices (non-negative weights)": "P",
+    "Find a minimum spanning tree": "P",
+    "2-colourability: can the graph be coloured with 2 colours?": "P",
+    "3-colourability: can the graph be coloured with 3 colours?": "NP-complete",
+    "Find a maximum matching in a bipartite graph": "P",
+    "Find a maximum flow in a network": "P",
+    "Clique: is there a clique of size k (with k part of the input)?": "NP-complete",
+    "Planarity: is the graph planar?": "P",
+    "TSP decision: is there a tour of length at most L?": "NP-complete",
+    "TSP optimisation: find a shortest tour": "NP-hard",
 }
 
 
@@ -319,7 +319,7 @@ if __name__ == "__main__":
     print("\n=== Brute-force search for Hamiltonian cycles ===")
     for name, graph in [("K5", complete_graph(5)), ("C6", cycle_graph(6)), ("K2,3", complete_bipartite_graph(2, 3))]:
         cycle, checked = hamiltonian_cycle_bruteforce(graph)
-        shown = format_path(cycle) if cycle is not None else "(kein Hamiltonkreis)"
+        shown = format_path(cycle) if cycle is not None else "(no Hamiltonian cycle)"
         print(f"  {name:<5} cycle: {shown:<32} permutations checked: {checked}")
     cycle, checked = hamiltonian_cycle_bruteforce(petersen_graph())
     print(f"  Petersen: cycle {cycle}, permutations checked: {checked} = 9!")

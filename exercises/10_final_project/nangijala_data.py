@@ -1,4 +1,4 @@
-"""Data for the final project "Das Netzwerk von Nangijala".
+"""Data for the final project "The Nangijala network".
 
 The data is kept as plain Python lists and dictionaries, independent of the
 ``Graph`` class. Turning it into graphs is part of the project.

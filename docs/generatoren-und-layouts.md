@@ -62,4 +62,4 @@ Ergänzungen für schöne Bilder:
 
 Laufzeit $O(\text{Versuche} \cdot \text{Iterationen} \cdot |V|^2)$: für die Graphen des Kurses (bis etwa 100 Knoten) ausreichend schnell. Ein anderer `seed` liefert ein anderes Bild.
 
-Literatur: T. M. J. Fruchterman, E. M. Reingold: *Graph drawing by force-directed placement*. Software – Practice and Experience 21(11), 1991, S. 1129–1164.
+Literatur: T. M. J. Fruchterman, E. M. Reingold: *Graph drawing by force-directed placement*. Software - Practice and Experience 21(11), 1991, S. 1129-1164.

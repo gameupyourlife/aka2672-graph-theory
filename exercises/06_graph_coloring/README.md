@@ -1,4 +1,4 @@
-# Einheit 6 – Graphfärbung
+# Einheit 6 - Graphfärbung
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

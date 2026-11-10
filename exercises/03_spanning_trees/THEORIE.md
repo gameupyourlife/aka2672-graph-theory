@@ -1,4 +1,4 @@
-# Theorie zu Einheit 3 – Spannbäume und Kruskal
+# Theorie zu Einheit 3 - Spannbäume und Kruskal
 
 ## 1. Überblick
 

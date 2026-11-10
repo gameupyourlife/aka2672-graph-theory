@@ -423,10 +423,10 @@ def format_value(value: object) -> str:
     * strings are shown without quotes: ``"A"`` -> ``A``,
     * whole floats without ``.0``: ``3.0`` -> ``3``; ``inf`` -> ``∞``,
     * lists, tuples and queues: ``[A, B]``; sets sorted: ``{A, B}``,
-    * dictionaries: ``{A: 1, B: 2}``; ``None`` -> ``–``.
+    * dictionaries: ``{A: 1, B: 2}``; ``None`` -> ``-``.
     """
     if value is None:
-        return "–"
+        return "-"
     if isinstance(value, str):
         return value
     if isinstance(value, bool):

@@ -94,10 +94,10 @@ def path_weight(graph: Graph, path: Sequence[Vertex]) -> float:
 def format_path(path: Sequence[Vertex] | None, directed: bool = True) -> str:
     """Return a path as a readable string, e.g. ``"A -> B -> C"``.
 
-    ``None`` (no path exists) is shown as ``"(kein Weg)"``.
+    ``None`` (no path exists) is shown as ``"(no path)"``.
     """
     if path is None:
-        return "(kein Weg)"
+        return "(no path)"
     separator = " -> " if directed else " - "
     return separator.join(str(v) for v in path)
 

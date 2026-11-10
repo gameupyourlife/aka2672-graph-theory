@@ -288,21 +288,21 @@ def test_number_of_hamiltonian_cycles_negative() -> None:
 # Complexity classes
 # ----------------------------------------------------------------------
 EXPECTED_CLASSES = {
-    "Eulerkreis: Besitzt der Graph einen Eulerkreis?": "P",
-    "Hamiltonkreis: Besitzt der Graph einen Hamiltonkreis?": "NP-vollständig",
-    "Kürzester Weg zwischen zwei Knoten (nichtnegative Gewichte) finden": "P",
-    "Minimalen Spannbaum finden": "P",
-    "2-Färbbarkeit: Ist der Graph mit 2 Farben färbbar?": "P",
-    "3-Färbbarkeit: Ist der Graph mit 3 Farben färbbar?": "NP-vollständig",
-    "Maximales Matching in einem bipartiten Graphen finden": "P",
-    "Maximalen Fluss in einem Netzwerk finden": "P",
-    "Clique: Gibt es eine Clique mit k Knoten (k ist Teil der Eingabe)?": "NP-vollständig",
-    "Planarität: Ist der Graph planar?": "P",
-    "TSP-Entscheidung: Gibt es eine Rundreise mit Länge höchstens L?": "NP-vollständig",
-    "TSP-Optimierung: Kürzeste Rundreise finden": "NP-schwer",
+    "Euler circuit: does the graph have an Euler circuit?": "P",
+    "Hamiltonian cycle: does the graph have a Hamiltonian cycle?": "NP-complete",
+    "Find a shortest path between two vertices (non-negative weights)": "P",
+    "Find a minimum spanning tree": "P",
+    "2-colourability: can the graph be coloured with 2 colours?": "P",
+    "3-colourability: can the graph be coloured with 3 colours?": "NP-complete",
+    "Find a maximum matching in a bipartite graph": "P",
+    "Find a maximum flow in a network": "P",
+    "Clique: is there a clique of size k (with k part of the input)?": "NP-complete",
+    "Planarity: is the graph planar?": "P",
+    "TSP decision: is there a tour of length at most L?": "NP-complete",
+    "TSP optimisation: find a shortest tour": "NP-hard",
 }
 
-VALID_LABELS = {"P", "NP-vollständig", "NP-schwer"}
+VALID_LABELS = {"P", "NP-complete", "NP-hard"}
 
 
 def filled_complexity_classes() -> dict[str, str]:

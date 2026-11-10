@@ -1,4 +1,4 @@
-"""Unit 10: Final project "Das Netzwerk von Nangijala" - DEMO SOLUTION.
+"""Unit 10: Final project "The Nangijala network" - DEMO SOLUTION.
 
 Every question of the project is answered by *modelling* it as a graph
 problem and then calling an algorithm from an earlier unit:
@@ -214,41 +214,41 @@ def max_supply(
 def main() -> None:
     """Print a complete report for the Nangijala network."""
     nangijala = build_network(data.ROADS)
-    print("=== A: Modell ===")
+    print("=== A: Model ===")
     print_graph(nangijala)
 
-    print("\n=== B: Erreichbarkeit ===")
+    print("\n=== B: Reachability ===")
     closed = ["Bärenpass", "Adlerhorst"]
     reachable = reachable_places(nangijala, "Reiterhof", closed)
-    print(f"Gesperrt: {closed} -> von Reiterhof erreichbar: {sorted(reachable)}")
-    print("Kritische Orte (Schnittknoten):", critical_places(nangijala))
+    print(f"With {closed} closed, reachable from Reiterhof: {sorted(reachable)}")
+    print("Critical places (cut vertices):", critical_places(nangijala))
 
-    print("\n=== C: Winterwege (minimaler Spannbaum) ===")
+    print("\n=== C: Winter roads (minimum spanning tree) ===")
     edges, total = winter_roads(nangijala)
     for u, v, minutes in edges:
         print(f"  {u} - {v}: {minutes} min")
-    print(f"  {len(edges)} Wege, zusammen {total} Minuten "
-          f"(von insgesamt {sum(w for _, _, w in nangijala.edges())} Minuten)")
+    print(f"  {len(edges)} roads, {total} minutes "
+          f"(out of {sum(w for _, _, w in nangijala.edges())} minutes across all roads)")
 
-    print("\n=== D: Schnellste Wege ===")
+    print("\n=== D: Fastest routes ===")
     for target, closed in [("Tengils Burg", []), ("Marktplatz", []), ("Marktplatz", ["Bärenpass", "Waldsee"])]:
         route = fastest_route(nangijala, "Reiterhof", target, closed)
-        text = "kein Weg" if route is None else f"{format_path(route[0])} ({route[1]} min)"
-        print(f"  Reiterhof -> {target}, gesperrt {closed}: {text}")
+        text = "no path" if route is None else f"{format_path(route[0])} ({route[1]} min)"
+        print(f"  Reiterhof -> {target}, closures {closed}: {text}")
 
-    print("\n=== E: Laternenfarben ===")
+    print("\n=== E: Lantern colours ===")
     colors = lantern_colors(nangijala)
-    print(f"  {coloring.number_of_colors(colors)} Farben:", colors)
+    print(f"  {coloring.number_of_colors(colors)} colours:", colors)
 
-    print("\n=== F: Aufgabenverteilung ===")
+    print("\n=== F: Task assignments ===")
     assignment = assign_tasks(data.QUALIFICATIONS)
     for person, task in assignment.items():
         print(f"  {person}: {task}")
-    print("  ohne Aufgabe:", [p for p in data.QUALIFICATIONS if p not in assignment])
+    print("  Unassigned:", [p for p in data.QUALIFICATIONS if p not in assignment])
 
-    print("\n=== G: Nachschub (maximaler Fluss) ===")
+    print("\n=== G: Supplies (maximum flow) ===")
     value, flow = max_supply(data.SUPPLY_ROUTES, "Kirschtal", "Heckenrosental")
-    print(f"  maximal {value} Säcke pro Nacht")
+    print(f"  Up to {value} sacks per night")
     for (u, v), amount in flow.items():
         if amount > 0:
             print(f"  {u} -> {v}: {amount}")
@@ -264,10 +264,10 @@ def _show_report(nangijala: Graph) -> None:
     pictures = [
         snapshot(
             nangijala,
-            "Winterwege und kritische Orte",
+            "Winter roads and critical places",
             highlight_edges=edges,
             vertex_flags={place: ["conflict"] for place in critical},
-            message=f"Minimaler Spannbaum: {total} Minuten. Rot gefüllt: Schnittknoten {', '.join(critical)}.",
+            message=f"Minimum spanning tree: {total} minutes. Cut vertices are shown in red: {', '.join(critical)}.",
             **on_map,
         )
     ]
@@ -278,10 +278,10 @@ def _show_report(nangijala: Graph) -> None:
         pictures.append(
             snapshot(
                 nangijala,
-                "Schnellster Weg",
+                "Fastest route",
                 edge_flags={(u, v): ["path"] for u, v in zip(path, path[1:])},
                 vertex_flags={path[0]: ["start"], path[-1]: ["target"]},
-                message=f"Reiterhof -> Tengils Burg: {minutes} Minuten über {', '.join(path[1:-1])}.",
+                message=f"Reiterhof -> Tengils Burg: {minutes} minutes via {', '.join(path[1:-1])}.",
                 **on_map,
             )
         )
@@ -290,9 +290,9 @@ def _show_report(nangijala: Graph) -> None:
     pictures.append(
         snapshot(
             nangijala,
-            "Laternenfarben",
-            vertex_colors={place: f"Farbe {c}" for place, c in colors.items()},
-            message=f"{coloring.number_of_colors(colors)} Farben; benachbarte Orte leuchten verschieden.",
+            "Lantern colours",
+            vertex_colors={place: f"Colour {c}" for place, c in colors.items()},
+            message=f"{coloring.number_of_colors(colors)} colours. Neighbouring places use different colours.",
             show_weights=False,
             **on_map,
         )
@@ -308,10 +308,10 @@ def _show_report(nangijala: Graph) -> None:
     pictures.append(
         snapshot(
             qualified,
-            "Aufgabenverteilung",
+            "Task assignments",
             left=people,
             edge_flags={pair: ["matched"] for pair in assignment.items()},
-            message=f"{len(assignment)} von {len(people)} Personen bekommen eine Aufgabe.",
+            message=f"{len(assignment)} of {len(people)} people are assigned a task.",
         )
     )
 
@@ -324,15 +324,15 @@ def _show_report(nangijala: Graph) -> None:
     pictures.append(
         snapshot(
             supply,
-            "Nachschub",
+            "Supplies",
             edge_labels={(u, v): f"{flow[(u, v)]}/{c}" for u, v, c in supply.edges()},
             edge_flags=flow_flags,
             vertex_flags={"Kirschtal": ["start"], "Heckenrosental": ["target"]},
-            message=f"Maximal {value} Säcke pro Nacht (Fluss/Kapazität).",
+            message=f"Up to {value} sacks per night (flow/capacity).",
             **on_map,
         )
     )
-    show(*pictures, title="Das Netzwerk von Nangijala")
+    show(*pictures, title="The Nangijala network")
 
 
 if __name__ == "__main__":

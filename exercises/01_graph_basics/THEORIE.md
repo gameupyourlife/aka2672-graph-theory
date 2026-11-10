@@ -1,4 +1,4 @@
-# Theorie zu Einheit 1 – Graphen modellieren
+# Theorie zu Einheit 1 - Graphen modellieren
 
 ## 1. Überblick
 
@@ -18,7 +18,7 @@ Ein Graph $G = (V,E)$ besteht aus Knoten $V$ und Kanten $E$. Du entscheidest, wo
 
 ### Grade und Handschlaglemma
 
-Der Grad eines Knotens ist im ungerichteten Graphen die Zahl seiner Kanten. Sortierst du alle Grade absteigend, bekommst du die Gradfolge. Im Pfad `A – B – C` mit isoliertem `D` ist sie `[2, 1, 1, 0]`. Jede Kante trägt an beiden Enden je 1 zur Summe bei. Deshalb gilt $\sum_{v \in V}\deg(v) = 2|E|$. Die Summe ist gerade, also muss die Anzahl der ungeraden Summanden gerade sein.
+Der Grad eines Knotens ist im ungerichteten Graphen die Zahl seiner Kanten. Sortierst du alle Grade absteigend, bekommst du die Gradfolge. Im Pfad `A - B - C` mit isoliertem `D` ist sie `[2, 1, 1, 0]`. Jede Kante trägt an beiden Enden je 1 zur Summe bei. Deshalb gilt $\sum_{v \in V}\deg(v) = 2|E|$. Die Summe ist gerade, also muss die Anzahl der ungeraden Summanden gerade sein.
 
 Im gerichteten Graphen zählt der Eingangsgrad ankommende und der Ausgangsgrad abgehende Kanten. Bei `A → B` und `C → B` hat `B` das Paar `(2, 0)`. Addierst du alle Eingangsgrade oder alle Ausgangsgrade, erhältst du jeweils $|E|$.
 

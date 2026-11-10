@@ -1,4 +1,4 @@
-# Einheit 2 – Breiten- und Tiefensuche
+# Einheit 2 - Breiten- und Tiefensuche
 
 Die Programmieraufträge stehen direkt in [`task.py`](task.py).
 

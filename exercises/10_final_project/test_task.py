@@ -1,4 +1,4 @@
-"""Tests for unit 10 (final project "Das Netzwerk von Nangijala").
+"""Tests for unit 10 (final project "The Nangijala network").
 
 By default these tests check ``task.py``. Use ``pytest --impl=demo`` to check
 ``demo_solution.py`` instead.

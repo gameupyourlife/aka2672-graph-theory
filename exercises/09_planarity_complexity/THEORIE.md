@@ -1,4 +1,4 @@
-# Theorie zu Einheit 9 – Planarität und Komplexität
+# Theorie zu Einheit 9 - Planarität und Komplexität
 
 ## 1. Überblick
 
@@ -40,6 +40,6 @@ Für eine Laufzeitschätzung teilst du die Zahl der Kandidaten durch die pro Sek
 
 Ein Entscheidungsproblem stellt eine Ja-Nein-Frage. **P** umfasst die Entscheidungsprobleme, die sich in Polynomialzeit lösen lassen. **NP** umfasst die Entscheidungsprobleme, deren Ja-Instanzen ein Zertifikat von polynomialer Länge haben, das sich in Polynomialzeit prüfen lässt. Zum Beispiel ist eine Liste benachbarter Knoten ein Zertifikat dafür, dass ein Ziel erreichbar ist. Du kannst die Liste Schritt für Schritt prüfen.
 
-Bei einer polynomialen Reduktion übersetzt du Instanzen eines Problems in Instanzen eines anderen und erhältst dabei die Ja-Nein-Antwort. Ein Problem ist **NP-schwer**, wenn sich jedes Problem aus NP darauf reduzieren lässt. Liegt es zusätzlich selbst in NP, ist es **NP-vollständig**. Das Finden einer optimalen Lösung und die Frage, ob eine Lösung einen vorgegebenen Grenzwert erreicht, sind unterschiedliche Problemformen. Ordne die Aufgaben im Kurs unter der Annahme $P \ne NP$ ein. Hier steht `P` auch für in Polynomialzeit lösbare Such- und Optimierungsaufgaben. Verwende `NP-schwer` für die schweren Aufgaben, die hier keine Entscheidungsprobleme in NP sind.
+Bei einer polynomialen Reduktion übersetzt du Instanzen eines Problems in Instanzen eines anderen und erhältst dabei die Ja-Nein-Antwort. Ein Problem ist **NP-schwer**, wenn sich jedes Problem aus NP darauf reduzieren lässt. Liegt es zusätzlich selbst in NP, ist es **NP-vollständig**. Das Finden einer optimalen Lösung und die Frage, ob eine Lösung einen vorgegebenen Grenzwert erreicht, sind unterschiedliche Problemformen. Ordne die Aufgaben im Kurs unter der Annahme $P \ne NP$ ein. Hier steht `P` auch für in Polynomialzeit lösbare Such- und Optimierungsaufgaben. Verwende `NP-hard` für die schweren Aufgaben, die hier keine Entscheidungsprobleme in NP sind.
 
 [Arbeitsauftrag](README.md) · [Euler- und Hamiltonprobleme](../05_euler_hamilton/THEORIE.md)

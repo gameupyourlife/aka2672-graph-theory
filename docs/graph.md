@@ -128,8 +128,8 @@ Ein benanntes Tupel; man kann es auspacken (`for u, v, w in graph.edges()`) oder
 
 | Methode | Beschreibung | Fehler |
 |---|---|---|
-| `add_vertex(v, **attributes)` | Knoten hinzufügen; bestehender Knoten: nur Attribute ergänzen. | – |
-| `add_vertices(vertices)` | Mehrere Knoten hinzufügen. | – |
+| `add_vertex(v, **attributes)` | Knoten hinzufügen; bestehender Knoten: nur Attribute ergänzen. | - |
+| `add_vertices(vertices)` | Mehrere Knoten hinzufügen. | - |
 | `add_edge(u, v, weight=1, **attributes)` | Kante hinzufügen; fehlende Endknoten werden angelegt. | `ValueError`: Schleife, doppelte Kante, ungültiges Gewicht |
 | `add_edges(edges)` | Mehrere Kanten als `(u, v)` oder `(u, v, w)`. | wie `add_edge` |
 | `set_weight(u, v, weight)` | Gewicht einer bestehenden Kante ändern. | `KeyError`, `ValueError` |
