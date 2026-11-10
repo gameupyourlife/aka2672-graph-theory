@@ -38,7 +38,7 @@ def dijkstra(graph: Graph, start: Vertex) -> tuple[dict[Vertex, float], dict[Ver
     """
     if start not in graph:
         raise KeyError(f"Start vertex {start!r} is not in the graph")
-    # The correctness proof needs non-negative weights (README, section 2).
+    # The correctness proof needs non-negative weights.
     # We check *all* edges up front, so the result never depends on luck.
     for u, v, weight in graph.edges():
         if weight < 0:

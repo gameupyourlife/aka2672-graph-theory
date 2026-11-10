@@ -183,7 +183,7 @@ show(trace)
 
 Fertige, kommentierte Beispiele für alle Algorithmen des Kurses stehen in den Dateien `exercises/*/demo_animation.py` (in der Lehrendenversion), z. B. [`exercises/02_bfs_dfs/demo_animation.py`](../exercises/02_bfs_dfs/demo_animation.py).
 
-**Den eigenen Algorithmus animieren:** Kopieren Sie Ihre Funktion aus `task.py`, fügen Sie wie oben `trace`-Aufrufe ein und geben Sie den `Trace` zurück. So sehen Sie, was *Ihre* Implementierung tut, und finden Fehler schneller als mit `print`.
+Kopiere zum Animieren deines Algorithmus die Funktion aus `task.py`, füge wie oben `trace`-Aufrufe ein und gib den `Trace` zurück. So kannst du die einzelnen Schritte deiner Implementierung nachvollziehen.
 
 ## 4. Der Zustand: Flags, Beschriftungen, Farben, Variablen
 
@@ -211,7 +211,7 @@ Wichtige Eigenschaften:
 
 ## 5. Eingebaute Flags
 
-Die eingebauten Flags (`lib.trace.DEFAULT_STYLES`) decken die üblichen Zustände ab. Verwenden Sie sie mit dieser Bedeutung, dann sind alle Animationen des Kurses einheitlich.
+Die eingebauten Flags (`lib.trace.DEFAULT_STYLES`) decken die üblichen Zustände ab. Verwende die Flags mit dieser Bedeutung, damit die Animationen des Kurses einheitlich bleiben.
 
 **Knoten**
 
@@ -366,7 +366,7 @@ Gefällt die automatische Anordnung nicht, kann man Knoten im Player mit der Mau
 
 ## 12. Tipps für gute Animationen
 
-- **Ein Schritt = ein Gedanke.** Nehmen Sie ein Bild auf, wenn etwas Erklärenswertes passiert: ein Knoten wird entnommen, eine Kante geprüft, ein Wert verbessert. Zu viele Schritte ermüden; 20 bis 150 Schritte sind meist gut.
+- Nimm ein Bild auf, wenn du einen Knoten entnimmst, eine Kante prüfst oder einen Wert verbesserst. Für eine Animation genügen meist 20 bis 150 Schritte.
 - **Nachrichten erklären das Warum:** „d[B] = 7 > 4 + 2: verbessere auf 6“ ist hilfreicher als „Relaxiere B“.
 - **Datenstrukturen sichtbar machen:** Warteschlange, Stapel, Heap, Union-Find-Mengen, Matching als `variable`.
 - **`current` wandern lassen:** `trace.current(v)` und `trace.current_edge(u, v)` entfernen das Flag automatisch vom vorherigen Element.

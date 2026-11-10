@@ -1,9 +1,9 @@
-"""Unit 8: Maximum flows - YOUR SOLUTION.
+"""Einheit 8 – Maximale Flüsse.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/08_max_flow
 """
@@ -44,8 +44,8 @@ def residual_graph(graph: Graph, flow: Mapping[tuple[Vertex, Vertex], float]) ->
 def find_augmenting_path(residual: Graph, source: Vertex, sink: Vertex) -> list[Vertex] | None:
     """Return a shortest path ``[source, ..., sink]`` (fewest edges) in ``residual``.
 
-    Uses a breadth-first search. Returns ``[source]`` if ``source == sink``
-    and ``None`` if ``sink`` cannot be reached.
+    Write the breadth-first search in this function. Return ``[source]`` if
+    ``source == sink`` and ``None`` if ``sink`` cannot be reached.
 
     Raises:
         KeyError: If ``source`` or ``sink`` is not a vertex of ``residual``.
@@ -62,7 +62,8 @@ def edmonds_karp(
 ) -> tuple[float, dict[tuple[Vertex, Vertex], float]]:
     """Compute a maximum flow from ``source`` to ``sink`` (Edmonds-Karp).
 
-    The capacities are the edge weights of the directed ``graph``.
+    The capacities are the edge weights of the directed ``graph``. Accept
+    zero and fractional capacities and leave the input graph unchanged.
 
     Returns:
         A pair ``(value, flow)``: the value of a maximum flow and the flow

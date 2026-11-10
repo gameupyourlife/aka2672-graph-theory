@@ -1,9 +1,12 @@
-"""Unit 2: Breadth-first search and depth-first search - YOUR SOLUTION.
+"""Einheit 2 – Breiten- und Tiefensuche.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Nutze bei gerichteten Graphen die ausgehenden Nachbarn. Implementiere die
+Suchen in O(|V| + |E|) und lass den Eingabegraphen unverändert.
+
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/02_bfs_dfs
 """
@@ -94,7 +97,7 @@ def is_connected(graph: Graph) -> bool:
     Raises:
         ValueError: If the graph is directed.
     """
-    # TODO
+    # TODO: Prüfe mit connected_components(), ob es höchstens eine Komponente gibt.
     raise NotImplementedError("TODO: is_connected")
 
 
@@ -109,7 +112,7 @@ def dfs_recursive(graph: Graph, start: Vertex) -> list[Vertex]:
 
 def bfs_layers(graph: Graph, start: Vertex) -> list[list[Vertex]]:
     """OPTIONAL: Return the BFS layers ``[[start], [distance 1], [distance 2], ...]``."""
-    # TODO (optional)
+    # TODO (optional): Gruppiere die von bfs() erreichten Knoten nach Abstand.
     raise NotImplementedError("TODO (optional): bfs_layers")
 
 

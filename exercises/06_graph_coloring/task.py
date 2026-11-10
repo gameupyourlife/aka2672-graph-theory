@@ -1,9 +1,12 @@
-"""Unit 6: Graph colouring - YOUR SOLUTION.
+"""Einheit 6 – Graphfärbung.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Der Beispielblock am Dateiende ruft auch optionale Funktionen auf.
+Teste die Pflichtaufgaben einzeln mit pytest, solange diese TODOs offen sind.
+
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/06_graph_coloring
 """
@@ -18,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 from lib.generators import cycle_graph, petersen_graph
 from lib.graph import Graph, Vertex
 
-# Pippi's party in Villa Kunterbunt (see README.md): all guests, and the
+# Pippi's party in Villa Kunterbunt: all guests, and the
 # pairs of guests who must not sit at the same table.
 PARTY_GUESTS = [
     "Pippi",
@@ -50,7 +53,8 @@ def greedy_coloring(graph: Graph, order: Sequence[Vertex] | None = None) -> dict
     The colours are the numbers 0, 1, 2, ... The vertices are coloured one
     after the other in the order ``order``; every vertex gets the smallest
     colour that none of its *already coloured* neighbours has.
-    ``order=None`` means the order of ``graph.vertices()``.
+    ``order=None`` means the order of ``graph.vertices()``. Use O(|V| + |E|)
+    time and leave the graph unchanged.
 
     Returns:
         A dictionary ``vertex -> colour`` containing every vertex.
@@ -127,7 +131,7 @@ def welsh_powell_order(graph: Graph) -> list[Vertex]:
     Raises:
         ValueError: If the graph is directed.
     """
-    # TODO (optional): sorted() with a key function, see README.md.
+    # TODO (optional): use sorted() with graph.degree as the key and reverse=True.
     raise NotImplementedError("TODO (optional): welsh_powell_order")
 
 

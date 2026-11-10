@@ -16,7 +16,7 @@ Two big ideas meet in this unit:
   3-colourability, TSP) nobody knows such an algorithm. The naive search for
   a Hamiltonian cycle tries ``(n-1)!`` vertex orders - and ``(n-1)!`` explodes.
 
-Solutions of the pen-and-paper exercises (README.md, section 5, part C)
+Solutions of the pen-and-paper exercises (README.md, "Auf Papier")
 -----------------------------------------------------------------------
 
 C1. Euler's formula on drawings (n - m + f = 2 for connected graphs):

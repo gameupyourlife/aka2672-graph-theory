@@ -37,7 +37,7 @@ KOENIGSBERG_BRIDGES = [
     ("b7", "Süd", "Ost"),
 ]
 
-# "Das ist das Haus vom Ni-ko-laus": 5 corners, 8 lines (see README.md).
+# "Das ist das Haus vom Ni-ko-laus": 5 corners, 8 lines.
 NIKOLAUS_EDGES = [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)]
 
 

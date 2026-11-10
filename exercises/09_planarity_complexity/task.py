@@ -1,10 +1,11 @@
-"""Unit 9: Planarity and complexity - YOUR SOLUTION.
+"""Einheit 9 – Planarität und Komplexität.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code and every ``"TODO"`` in
-``COMPLEXITY_CLASSES`` by the correct label.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Ordne außerdem jedem Problem in `COMPLEXITY_CLASSES` ein Label zu.
+
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/09_planarity_complexity
 """
@@ -104,7 +105,8 @@ def hamiltonian_cycle_bruteforce(graph: Graph) -> tuple[list[Vertex] | None, int
     The first vertex ``v0`` of ``graph.vertices()`` is fixed as start. All
     permutations of the other ``n - 1`` vertices are tried one after the
     other (e.g. with ``itertools.permutations``) until one of them forms a
-    cycle ``v0, ..., v0`` in the graph.
+    cycle ``v0, ..., v0`` in the graph. Leave the input graph unchanged and
+    try the function only on small graphs (around 10 vertices or fewer).
 
     Returns:
         A pair ``(cycle, checked)``:
@@ -141,11 +143,11 @@ def number_of_hamiltonian_cycles_complete(n: int) -> int:
     raise NotImplementedError("TODO: number_of_hamiltonian_cycles_complete")
 
 
-# Replace every "TODO" by exactly one of the labels
-#     "P", "NP-vollständig", "NP-schwer"
-# Use the most precise class known today, assuming P != NP (see README.md).
-# "NP-schwer" is meant for problems that are NP-hard but are not decision
-# problems in NP (e.g. optimisation problems).
+# Ersetze jedes "TODO" durch "P", "NP-vollständig" oder "NP-schwer".
+# Lass die Schlüssel unverändert und wähle unter der Annahme P != NP
+# das präziseste Label. Verwende "P" auch für Optimierungsprobleme,
+# die du in Polynomialzeit lösen kannst, und "NP-schwer" für NP-schwere
+# Probleme, die keine Entscheidungsprobleme in NP sind.
 COMPLEXITY_CLASSES: dict[str, str] = {
     "Eulerkreis: Besitzt der Graph einen Eulerkreis?": "TODO",
     "Hamiltonkreis: Besitzt der Graph einen Hamiltonkreis?": "TODO",

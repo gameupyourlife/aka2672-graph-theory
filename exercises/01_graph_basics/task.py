@@ -1,9 +1,14 @@
-"""Unit 1: Modelling graphs - YOUR SOLUTION.
+"""Einheit 1 – Graphen modellieren.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Verwende `Graph` aus `lib.graph`. `Graph(directed=True)` legt einen
+gerichteten Graphen an. `add_edge(u, v)` ergänzt fehlende Knoten,
+`vertices()` liefert die Knoten und `edges()` die Kanten mit Gewicht.
+Berücksichtige auch leere Graphen.
+
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/01_graph_basics
 """
@@ -18,21 +23,39 @@ from lib.visualization import print_graph
 
 
 def build_bullerby_graph() -> Graph:
-    """Return the undirected graph of footpaths in Bullerbü.
+    """Erzeuge einen ungerichteten Graphen mit einer Kante pro Fußweg.
 
-    The vertices are the place names from the first table in README.md,
-    every footpath is an (unweighted) edge.
+    Verwende die Ortsnamen genau wie angegeben. Jede Kante hat Gewicht 1.
+
+    Nordhof – Mittelhof
+    Mittelhof – Südhof
+    Nordhof – Südhof
+    Mittelhof – Schule
+    Schule – Kaufladen
+    Kaufladen – Badestelle
+    Südhof – Badestelle
+    Badestelle – Erdbeerstelle
+    Nordhof – Erdbeerstelle
     """
-    # TODO: Create an undirected Graph and add one edge per footpath.
+    # TODO: Füge die Fußwege als ungerichtete Kanten ein.
     raise NotImplementedError("TODO: build_bullerby_graph")
 
 
 def build_letter_graph() -> Graph:
-    """Return the directed graph "who writes letters to whom".
+    """Erzeuge einen gerichteten Graphen mit einer Kante pro Briefverbindung.
 
-    An edge ``u -> v`` means: child ``u`` writes letters to child ``v``.
+    Die Pfeile zeigen vom Absender zum Empfänger.
+
+    Lisa -> Britta
+    Lisa -> Inga
+    Britta -> Lisa
+    Inga -> Britta
+    Lasse -> Ole
+    Bosse -> Lasse
+    Ole -> Bosse
+    Lasse -> Lisa
     """
-    # TODO: Create a *directed* Graph and add one edge per row of the table.
+    # TODO: Füge die Briefverbindungen als gerichtete Kanten ein.
     raise NotImplementedError("TODO: build_letter_graph")
 
 
@@ -57,7 +80,7 @@ def degree_sequence(graph: Graph) -> list[int]:
 
 def odd_degree_vertices(graph: Graph) -> list[Vertex]:
     """Return all vertices with odd degree (in the order of ``graph.vertices()``)."""
-    # TODO
+    # TODO: Filtere graph.vertices() mit den Werten aus degrees().
     raise NotImplementedError("TODO: odd_degree_vertices")
 
 
@@ -106,7 +129,10 @@ def complement(graph: Graph) -> Graph:
 
     The complement has the same vertices; two different vertices are
     adjacent in the complement exactly if they are *not* adjacent in
-    ``graph``.
+    ``graph``. Return a new graph with unweighted edges.
+
+    Raises:
+        ValueError: If the graph is directed.
     """
     # TODO (optional)
     raise NotImplementedError("TODO (optional): complement")

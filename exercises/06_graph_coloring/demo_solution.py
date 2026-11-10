@@ -25,7 +25,7 @@ from lib.generators import cycle_graph, petersen_graph
 from lib.graph import Graph, Vertex
 from lib.visualization import show, snapshot
 
-# Pippi's party in Villa Kunterbunt (see README.md): all guests, and the
+# Pippi's party in Villa Kunterbunt: all guests, and the
 # pairs of guests who must not sit at the same table.
 PARTY_GUESTS = [
     "Pippi",

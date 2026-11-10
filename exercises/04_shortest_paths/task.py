@@ -1,9 +1,9 @@
-"""Unit 4: Shortest paths with Dijkstra (and Bellman-Ford) - YOUR SOLUTION.
+"""Einheit 4 – Kürzeste Wege.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/04_shortest_paths
 """
@@ -23,6 +23,8 @@ def dijkstra(graph: Graph, start: Vertex) -> tuple[dict[Vertex, float], dict[Ver
     """Compute shortest paths from ``start`` with Dijkstra's algorithm.
 
     Works for directed and undirected graphs with non-negative weights.
+    Use heapq and leave the input graph unchanged. At equal distances,
+    a unique counter breaks ties without comparing vertex labels.
 
     Returns:
         A pair ``(dist, parent)``:
@@ -43,12 +45,13 @@ def dijkstra(graph: Graph, start: Vertex) -> tuple[dict[Vertex, float], dict[Ver
     # TODO: Step 1 - raise KeyError if start is not in the graph.
     # TODO: Step 2 - raise ValueError if some edge has a negative weight.
     # TODO: Step 3 - dist = {start: 0}, parent = {start: None},
-    #                heap = [(0, start)], finished = set().
-    # TODO: Step 4 - while the heap is not empty: pop the smallest (d, u);
+    #                heap = [(0, next(counter), start)], finished = set().
+    # TODO: Step 4 - while the heap is not empty: pop the smallest (d, _, u);
     #                skip u if it is already finished (lazy deletion);
     #                otherwise mark u as finished and relax every edge u -> v:
     #                if v is new or d + weight < dist[v], update dist[v] and
-    #                parent[v] and push (dist[v], v).
+    #                parent[v] and push (dist[v], next(counter), v).
+    #                Use itertools.count() for the counter.
     raise NotImplementedError("TODO: dijkstra")
 
 
@@ -96,7 +99,9 @@ def bellman_ford(graph: Graph, start: Vertex) -> tuple[dict[Vertex, float], dict
             (u - v - u is then already a negative closed walk).
     """
     # TODO (optional): |V| - 1 rounds of relaxing every edge, then one more
-    #                  check round to detect negative cycles.
+    #                  check round to detect negative cycles. Only relax
+    #                  from reached vertices and consider both directions
+    #                  of each edge in an undirected graph.
     raise NotImplementedError("TODO (optional): bellman_ford")
 
 

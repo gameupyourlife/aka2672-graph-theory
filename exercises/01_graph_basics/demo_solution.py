@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # find ``lib``
 from lib.graph import Graph, Vertex
 from lib.visualization import print_graph, show, snapshot
 
-# The data from README.md, written as lists of pairs. Keeping data separate
+# The data from task.py, written as lists of pairs. Keeping data separate
 # from code makes it easy to check against the table.
 FOOTPATHS = [
     ("Nordhof", "Mittelhof"),

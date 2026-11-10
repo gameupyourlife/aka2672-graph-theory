@@ -1,9 +1,9 @@
-"""Unit 3: Spanning trees, Union-Find and Kruskal's algorithm - YOUR SOLUTION.
+"""Einheit 3 – Spannbäume und Kruskal.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/03_spanning_trees
 """
@@ -96,7 +96,10 @@ def kruskal(graph: Graph) -> list[Edge]:
     ``|V| - 1`` edges; for a graph with ``c`` connected components it
     contains a minimum spanning tree of every component (``|V| - c``
     edges). The edges are ``Edge`` objects as returned by
-    ``graph.edges()``; their order does not matter.
+    ``graph.edges()``; their order does not matter. Accept negative and
+    fractional weights and leave the input graph unchanged. Use UnionFind
+    for cycle checks. With path compression and union by size, aim for
+    O(|V| + |E| log |E|) time.
 
     Raises:
         ValueError: If the graph is directed.
@@ -125,7 +128,8 @@ def prim(graph: Graph, start: Vertex) -> list[Edge]:
         KeyError: If ``start`` is not a vertex of the graph.
         ValueError: If the graph is directed.
     """
-    # TODO (optional): use heapq with entries (weight, ..., u, v).
+    # TODO (optional): use heapq with (weight, unique_counter, u, v) so
+    #                  equal weights do not require comparing vertex labels.
     raise NotImplementedError("TODO (optional): prim")
 
 

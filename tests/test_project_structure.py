@@ -1,7 +1,7 @@
 """Quality checks for the course material itself.
 
 These tests make sure that every unit is complete: all four files exist,
-README.md has the nine required sections, task.py contains TODOs instead of
+README.md includes an assignment, task.py contains TODOs instead of
 solutions, and every Python file can be parsed.
 """
 
@@ -18,19 +18,6 @@ UNITS = sorted(p for p in EXERCISES_DIR.iterdir() if p.is_dir() and p.name[:2].i
 HAS_DEMOS = any((unit / "demo_solution.py").exists() for unit in UNITS)
 needs_demos = pytest.mark.skipif(not HAS_DEMOS, reason="student version without demo solutions")
 
-README_SECTIONS = [
-    "## 1. Titel und Lernziele",
-    "## 2. Mathematischer Hintergrund",
-    "## 3. Relevante Definitionen",
-    "## 4. Problemstellung",
-    "## 5. Arbeitsaufträge",
-    "## 6. Anforderungen an die Implementierung",
-    "## 7. Beispiele für erwartetes Verhalten",
-    "## 8. Hinweise und optionale Zusatzaufgaben",
-    "## 9. Quellen und weiterführende Literatur",
-]
-
-
 def test_there_are_ten_units() -> None:
     assert [u.name[:2] for u in UNITS] == [f"{i:02d}" for i in range(1, 11)]
 
@@ -43,13 +30,9 @@ def test_unit_has_all_files(unit: Path) -> None:
 
 
 @pytest.mark.parametrize("unit", UNITS, ids=lambda p: p.name)
-def test_readme_has_all_sections(unit: Path) -> None:
+def test_readme_has_assignment(unit: Path) -> None:
     text = (unit / "README.md").read_text(encoding="utf-8")
-    positions = []
-    for section in README_SECTIONS:
-        assert section in text, f"{unit.name}/README.md lacks '{section}'"
-        positions.append(text.index(section))
-    assert positions == sorted(positions), "sections are out of order"
+    assert "## Auftrag" in text.splitlines(), f"{unit.name}/README.md lacks an assignment"
 
 
 def public_functions(path: Path) -> dict[str, ast.FunctionDef]:

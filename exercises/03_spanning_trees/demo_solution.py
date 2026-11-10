@@ -2,7 +2,7 @@
 
 Kruskal's algorithm is *greedy*: it looks at the edges from light to heavy
 and keeps an edge whenever it does not close a cycle. The cut property
-(README.md, section 2) guarantees that this simple rule produces a minimum
+guarantees that this simple rule produces a minimum
 spanning tree.
 
 The only difficult question is "would this edge close a cycle?", i.e. "are

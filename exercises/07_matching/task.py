@@ -1,9 +1,9 @@
-"""Unit 7: Bipartite matching - YOUR SOLUTION.
+"""Einheit 7 – Bipartites Matching.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/07_matching
 """
@@ -35,7 +35,8 @@ def find_augmenting_path(
         are several augmenting paths, any of them may be returned.
         ``None`` if there is no augmenting path.
 
-    ``matching`` is not modified.
+    Write the breadth-first search here. It should visit each vertex at
+    most once and leave both the graph and the matching unchanged.
     """
     # TODO: Step 1 - build matched_right = {right: left} from the matching.
     # TODO: Step 2 - put all unmatched left vertices into a deque and create
@@ -74,7 +75,8 @@ def maximum_bipartite_matching(
     """Return a maximum matching of the bipartite ``graph``.
 
     The left side consists of ``left_vertices``; all other vertices of the
-    graph form the right side.
+    graph form the right side. Use your augmenting-path search and aim for
+    O(|V| * (|V| + |E|)) time.
 
     Returns:
         A dictionary ``left vertex -> right vertex`` that contains exactly
@@ -87,7 +89,8 @@ def maximum_bipartite_matching(
         KeyError: If a left vertex is not a vertex of the graph.
     """
     # TODO: Step 1 - check the input (directed graph, unknown left vertices,
-    #                edges inside one side).
+    #                edges inside one side). Materialize left_vertices once
+    #                so you can use it repeatedly even if it is a generator.
     # TODO: Step 2 - start with the empty matching {}.
     # TODO: Step 3 - repeat: find an augmenting path; if there is none,
     #                return the matching; otherwise augment along it.
@@ -103,8 +106,10 @@ def minimum_vertex_cover(graph: Graph, left_vertices: Iterable[Vertex]) -> set[V
     Raises:
         Same errors as :func:`maximum_bipartite_matching`.
     """
-    # TODO (optional): Z = vertices reachable by alternating paths from the
-    #                  unmatched left vertices; return (L - Z) | (R & Z).
+    # TODO (optional): Find a maximum matching. Starting from every unmatched
+    #                  left vertex, follow non-matching edges left to right and
+    #                  matching edges right to left. Let Z be the reached
+    #                  vertices and return (L - Z) | (R & Z).
     raise NotImplementedError("TODO (optional): minimum_vertex_cover")
 
 
@@ -117,7 +122,9 @@ def hall_violator(graph: Graph, left_vertices: Iterable[Vertex]) -> set[Vertex] 
     Raises:
         Same errors as :func:`maximum_bipartite_matching`.
     """
-    # TODO (optional): use the set Z from the proof of Hall's theorem.
+    # TODO (optional): Find a maximum matching. If it leaves any left vertices
+    #                  unmatched, return the left vertices reached by the same
+    #                  alternating search as in minimum_vertex_cover().
     raise NotImplementedError("TODO (optional): hall_violator")
 
 

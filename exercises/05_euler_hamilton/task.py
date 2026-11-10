@@ -1,9 +1,13 @@
-"""Unit 5: Euler and Hamilton problems - YOUR SOLUTION.
+"""Einheit 5 – Euler- und Hamiltonprobleme.
 
-Read README.md in this folder first. Replace every
-``raise NotImplementedError(...)`` by your own code.
+Bearbeite die TODOs direkt an den Funktionen. Ersetze dort jeweils
+``raise NotImplementedError(...)`` durch deinen Code.
 
-Run the tests from the project root with::
+Der Beispielblock am Dateiende ruft auch optionale Funktionen auf.
+Teste die Pflichtaufgaben einzeln mit pytest, solange diese TODOs offen sind.
+Prüfe die Existenz von Eulerkreisen und Eulerzügen in O(|V| + |E|).
+
+Starte die Tests im Projektordner mit diesem Befehl.
 
     python -m pytest exercises/05_euler_hamilton
 """
@@ -31,7 +35,7 @@ KOENIGSBERG_BRIDGES = [
     ("b7", "Süd", "Ost"),
 ]
 
-# "Das ist das Haus vom Ni-ko-laus": 5 corners, 8 lines (see README.md).
+# "Das ist das Haus vom Ni-ko-laus": 5 corners, 8 lines.
 NIKOLAUS_EDGES = [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4), (3, 5), (4, 5)]
 
 
@@ -96,7 +100,7 @@ def find_euler_circuit(graph: Graph) -> list[Vertex] | None:
     Raises:
         ValueError: If the graph is directed.
     """
-    # TODO (optional): Hierholzer's algorithm, see README.md.
+    # TODO (optional): Hierholzer's algorithm with a stack.
     #   Step 1 - handle directed graphs, graphs without edges and graphs
     #            without an Euler circuit.
     #   Step 2 - remaining = graph.copy(); choose a start vertex with an edge.
@@ -121,7 +125,7 @@ def find_euler_trail(graph: Graph) -> list[Vertex] | None:
         ValueError: If the graph is directed.
     """
     # TODO (optional): Same algorithm as find_euler_circuit - only the start
-    #                  vertex is different.
+    #                  vertex is different. Check has_euler_trail() first.
     raise NotImplementedError("TODO (optional): find_euler_trail")
 
 
@@ -136,7 +140,7 @@ def find_hamiltonian_cycle(graph: Graph) -> list[Vertex] | None:
     Raises:
         ValueError: If the graph is directed.
     """
-    # TODO (optional): Backtracking, see README.md.
+    # TODO (optional): Build the path by backtracking.
     #   Step 1 - handle directed graphs and graphs with fewer than 3 vertices.
     #   Step 2 - fix a start vertex; path = [start].
     #   Step 3 - write an inner function extend() that tries every unused
